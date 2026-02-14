@@ -1,10 +1,36 @@
-# SentinelMCP - Microsoft Sentinel Managed Detection & Response
+# SentinelMCP
 
-A comprehensive, production-ready Managed Detection and Response (MDR) framework for Microsoft Sentinel, featuring 4-tier operational hierarchy, 16 specialized agents, and automated threat hunting capabilities.
+**Enterprise-Grade Managed Detection & Response (MDR) Framework for Microsoft Sentinel**
+
+A comprehensive, production-ready MDR operations architecture featuring a 4-tier operational hierarchy, 16 specialized agents, 40+ skills framework, and automated escalation workflows for the **PurpleX Lab** organization.
+
+---
+
+## 🚀 Quick Start
+
+**New to SentinelMCP?** Start here:
+
+1. **[START HERE: Overview](#overview)** (2 min) - What is SentinelMCP?
+2. **[Setup Instructions](#setup)** (5 min) - Get started
+3. **[Key Concepts](#key-concepts)** (5 min) - Core architecture
+
+**Need more detail?** See [Documentation Guide](#documentation-guide) below.
+
+---
 
 ## Overview
 
-**SentinelMCP** is an enterprise-grade MDR operations architecture designed for the **PurpleX Lab** organization. It provides a complete framework for managing security alerts, investigations, and threat hunting across Microsoft Sentinel with clear role definitions, skill progression models, and automated escalation workflows.
+SentinelMCP is a complete MDR framework that transforms raw security alerts into actionable intelligence through a **4-tier investigation hierarchy**:
+
+```
+Tier 1: TRIAGE          → Alert normalization, enrichment, false positive elimination
+  ↓
+Tier 2: INVESTIGATION   → In-depth analysis (malware, network, identity)
+  ↓
+Tier 3: FORENSIC        → Root cause analysis, evidence collection
+  ↓
+Cloud Hunter (Parallel) → Proactive threat hunting across infrastructure
+```
 
 ### Key Features
 
