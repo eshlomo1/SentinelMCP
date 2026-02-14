@@ -52,35 +52,53 @@ tier1_agents:
 - id: "tier1-alert-router"
   role_id: "t1-alert-routing"
   name: "Tier1-AlertRouter"
-  role: "Alert Routing & Triage"
-  description: "Routes alerts to appropriate teams, tiers, and workflows based on severity and type"
+  role: "Alert Routing & Escalation Authority"
+  description: "Routes and escalates alerts to Tier 2, investigations, or batch review based on severity and indicators; primary escalation decision authority for Tier 1"
   capabilities:
   - alert_classification
   - severity_assessment
   - team_routing
   - escalation_decision
   - workflow_assignment
+  - escalation_criteria_evaluation
+  escalation_to: "tier2"
+  escalation_authority: true
+  escalation_criteria:
+    automatic_triggers:
+    - "CRITICAL_SEVERITY"
+    - "CONFIRMED_COMPROMISE (3+ indicators)"
+    - "LATERAL_MOVEMENT_DETECTED"
+    - "DATA_EXFILTRATION_INDICATORS"
+    - "MULTIPLE_CORRELATED_ALERTS (5+ in 1h)"
+    escalation_rationale: "Automatic escalation to Tier 2 Investigation team"
+    sla_response_time: "2-5 minutes"
   routing_rules:
-  - condition: "severity == critical"
-    destination: "tier2_tier3"
+  - condition: "severity == critical OR confirmed_compromise == true"
+    destination: "tier2_immediate"
     escalation: true
+    escalation_sla: "0-5 minutes"
   - condition: "severity == high AND evidence_of_compromise == true"
     destination: "tier2"
     escalation: true
+    escalation_sla: "1-4 hours"
   - condition: "severity == medium"
     destination: "tier1_investigation"
     escalation: false
+    escalation_condition: "escalate if tier1_investigation_reveals_compromise"
   - condition: "severity == low"
     destination: "queue_for_batch_review"
     escalation: false
+    escalation_condition: "escalate only if pattern_detected"
   skills:
-  - alert_classification
-  - routing_logic
+  - alert_routing
+  - escalation_decision_making
   - severity_assessment
-  sla_response_time: "1 minute"
+  - threat_indicator_analysis
+  sla_response_time: "2 minutes"
   success_metrics:
   - routing_accuracy: 98%
-  - escalation_appropriateness: 95%
+  - escalation_appropriateness: 85%
+  - sla_compliance: 95%
 
 - id: "tier1-fp-eliminator"
   role_id: "t1-fp-detection"

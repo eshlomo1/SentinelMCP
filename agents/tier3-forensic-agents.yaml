@@ -102,18 +102,23 @@ tier3_forensic_agents:
 - id: "tier3-root-cause-analyzer"
   role_id: "t3-root-cause-analysis"
   name: "Tier3-RootCauseAnalyzer"
-  role: "Root Cause Analysis & Determination"
-  description: "Determines root cause of incident, identifies vulnerabilities, and recommends remediation"
+  role: "Root Cause Analysis & Case Lead"
+  description: "Determines root cause of incident, identifies vulnerabilities, recommends remediation, and serves as primary case lead for Tier 3 investigation completion; final escalation authority"
   capabilities:
   - root_cause_determination
   - vulnerability_identification
   - attack_technique_classification
   - remediation_recommendations
   - lesson_learned_extraction
+  - case_coordination
+  - final_reporting
+  escalation_complete: true
+  case_lead_authority: true
   frameworks:
   - mitre_attack
   - cis_controls
   - nist_framework
+  - forensic_best_practices
   output_format: "root_cause_analysis_report"
   skills:
   - root_cause_analysis
@@ -121,7 +126,18 @@ tier3_forensic_agents:
   - attack_technique_classification
   - remediation_planning
   - lessons_learned_documentation
+  - case_management
+  - executive_reporting
   sla_response_time: "8 hours"
   success_metrics:
   - root_cause_accuracy: 97%
   - remediation_effectiveness: 95%
+  - case_closure_completeness: 99%
+  case_closure_requirements:
+  - "Complete root cause analysis documented"
+  - "All affected systems analyzed"
+  - "Attack timeline established"
+  - "Evidence integrity verified"
+  - "Chain of custody completed"
+  - "Recommendations provided"
+  - "Executive summary prepared"

@@ -5,17 +5,66 @@ All notable changes to the SentinelMCP project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-02-14 (Tier Integration Release)
+
+### Added
+
+**Tier-to-Tier Escalation Framework**
+
+- Created comprehensive tier-integration.yaml with formal escalation specifications
+- Added automatic escalation triggers for Tier 1→2 transition (6 triggers)
+- Added automatic escalation triggers for Tier 2→3 transition (8 triggers)
+- Added manual escalation procedures with documentation requirements
+- Added conditional escalation based on investigation findings
+- Defined SLA response times by severity for each tier transition
+- Added data handoff requirements and standardized formats
+- Created integration points with case management system
+- Added performance metrics and KPI tracking
+
+**Agent Enhancements**
+
+- Enhanced Tier1-AlertRouter with escalation_authority=true
+- Added escalation_criteria to Tier1-AlertRouter with 6 automatic triggers
+- Added escalation_to: "tier2" field to Tier1-AlertRouter
+- Enhanced Tier2-ThreatAssessor with escalation_authority=true
+- Added escalation_criteria to Tier2-ThreatAssessor with 8 automatic triggers
+- Added escalation_to: "tier3" field to Tier2-ThreatAssessor
+- Enhanced Tier3-RootCauseAnalyzer with case_lead_authority=true
+- Added case_closure_requirements to Tier3-RootCauseAnalyzer
+- Added escalation_complete flag to Tier3-RootCauseAnalyzer
+
+**Documentation**
+
+- Created TIER_INTEGRATION.md with 600+ lines of operational guidance
+- Added quick reference escalation flowchart
+- Included detailed escalation trigger tables for both tier transitions
+- Added 4 real-world escalation scenario examples with walkthroughs
+- Documented escalation authority definitions and responsibilities
+- Added communication procedures and data handoff specifications
+- Documented when NOT to escalate with clear closure conditions
+- Added override procedures for leadership and law enforcement
+- Included performance metrics and target KPIs
+
+**Integration Points**
+
+- Case management system integration with INC-YYYY-##### format
+- Communication channels specification (email, Slack, case system)
+- Data format standardization for evidence handoff
+- Authority chain documentation (AlertRouter→ThreatAssessor→RootCauseAnalyzer)
+
 ## [1.0.1] - 2026-02-14 (Restructure Release)
 
 ### Changed
 
 **Directory Structure**
+
 - Moved all folders and files from `hierarchy/` subdirectory to root level
 - Renamed `hierarchy/README.md` to `HIERARCHY_README.md` for clarity
 - Flattened project structure for easier navigation and access
 - All agents, roles, skills, schema, and data directories now at root level
 
 **Documentation Updates**
+
 - Updated all file path references throughout documentation
 - Updated README.md with new directory structure
 - Updated INDEX.md to reflect root-level organization
@@ -26,6 +75,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated ARCHITECTURE_DIAGRAM.md with new file references
 
 **Impact**
+
 - Improved project accessibility and simplified navigation
 - Easier for new contributors to understand file organization
 - All references updated for consistency

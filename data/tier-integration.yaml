@@ -1,0 +1,478 @@
+tier_integration:
+  header: "MDR Tier Integration - Escalation Framework"
+  description: "Defines escalation paths and criteria between Tier 1, Tier 2, and Tier 3 (Forensic)"
+  last_updated: "2026-02-14"
+
+  # ============================================================================
+  # TIER 1 TO TIER 2 ESCALATION
+  # ============================================================================
+  tier1_to_tier2:
+    description: "Escalation from Tier 1 (Triage) to Tier 2 (Investigation)"
+    escalation_authority: "Tier1-AlertRouter"
+    target_tier: "Tier 2 Investigation Team"
+    escalation_agents:
+      source: "tier1-alert-router"
+      destinations:
+        - "tier2-malware-analyzer"
+        - "tier2-network-investigator"
+        - "tier2-identity-analyzer"
+        - "tier2-threat-assessor"
+
+    escalation_criteria:
+      automatic_escalation:
+        - criterion: "CRITICAL_SEVERITY"
+          description: "Alert severity is CRITICAL"
+          trigger: "severity_level == 'CRITICAL'"
+          response_time: "immediate (0 seconds)"
+          action: "Escalate to Tier 2 immediately + notify SOC leadership"
+          example: "Critical code execution indicator, active compromise evidence"
+
+        - criterion: "CONFIRMED_COMPROMISE"
+          description: "Evidence of confirmed system compromise"
+          trigger: "compromise_indicators >= 3"
+          response_time: "immediate (0 seconds)"
+          action: "Escalate to Tier 2 + create incident ticket"
+          indicators:
+            - "Execution of suspicious files"
+            - "Registry persistence mechanisms"
+            - "Unauthorized account creation"
+            - "Lateral movement patterns"
+          example: "System file replaced, suspicious scheduled task created, registry modified"
+
+        - criterion: "HIGH_SEVERITY_WITH_EVIDENCE"
+          description: "High severity alert with supporting evidence"
+          trigger: "severity_level == 'HIGH' AND context_indicators >= 2"
+          response_time: "1-4 hours"
+          action: "Queue for Tier 2 investigation"
+          example: "High-risk malware detected + network anomaly correlated"
+
+        - criterion: "LATERAL_MOVEMENT_DETECTED"
+          description: "Evidence of lateral movement or privilege escalation"
+          trigger: "lateral_movement_score >= 75"
+          response_time: "10 minutes"
+          action: "Immediate escalation to Tier 2 + preserve network state"
+          indicators:
+            - "Multiple failed authentication attempts"
+            - "Credential forwarding detected"
+            - "Process injection attempts"
+            - "Admin privilege acquisition"
+
+        - criterion: "MULTIPLE_ALERTS_PATTERN"
+          description: "Multiple correlated alerts indicating coordinated activity"
+          trigger: "alert_correlation_score >= 80 OR same_source_alerts >= 5_in_1_hour"
+          response_time: "30 minutes"
+          action: "Escalate with pattern analysis to Tier 2"
+          example: "5 alerts from same source within 1 hour showing progression"
+
+        - criterion: "DATA_EXFILTRATION_INDICATORS"
+          description: "Evidence of potential data exfiltration"
+          trigger: "exfiltration_score >= 70 OR large_outbound_transfer_to_external_ip"
+          response_time: "5 minutes"
+          action: "Immediate escalation to Tier 2 + preserve evidence"
+          indicators:
+            - "Large data transfer to external IP"
+            - "File compression in suspicious location"
+            - "Anonymous file upload detected"
+
+      manual_escalation:
+        - criterion: "ANALYST_JUDGMENT"
+          description: "Tier 1 analyst determines escalation is warranted"
+          trigger: "escalation_request_from_tier1_analyst"
+          response_time: "5-30 minutes (analyst decision)"
+          action: "Escalate with reasoning documentation"
+          required_documentation:
+            - reason_for_escalation: "string"
+            - supporting_evidence: "array"
+            - severity_assessment: "string"
+            - recommended_tier2_focus: "array"
+
+      conditional_escalation:
+        - criterion: "MEDIUM_SEVERITY_AFTER_INVESTIGATION"
+          description: "Medium severity alert escalated after Tier 1 investigation"
+          trigger: "tier1_investigation_complete AND findings_suggest_compromise"
+          response_time: "2-4 hours after Tier 1 investigation begins"
+          action: "Escalate to Tier 2 with investigation findings"
+          prerequisite: "Tier 1 must complete preliminary investigation first"
+
+        - criterion: "PATTERN_CORRELATION_DETECTED"
+          description: "Data correlation reveals pattern of attacks"
+          trigger: "pattern_detection_score >= 85 OR same_attacker_signature"
+          response_time: "1-4 hours"
+          action: "Escalate to Tier 2 with pattern analysis"
+
+    escalation_process:
+      step_1:
+        name: "Decision Point Reached"
+        performer: "Tier1-AlertRouter"
+        trigger: "One or more escalation criteria met"
+        action: "Evaluate escalation criteria"
+
+      step_2:
+        name: "Escalation Approval"
+        performer: "Tier1-AlertRouter (automated) OR Tier1-Lead (manual)"
+        action: "Verify escalation criteria and authorize escalation"
+        time_limit: "5 minutes for manual approval"
+
+      step_3:
+        name: "Case Creation"
+        performer: "Tier1-AlertRouter"
+        action: "Create investigation case with all context"
+        output: "investigation_case"
+        includes:
+          - normalized_alert_data
+          - enrichment_context
+          - supporting_evidence
+          - escalation_reason
+          - tier1_findings
+
+      step_4:
+        name: "Tier 2 Assignment"
+        performer: "Tier 2 Queue Manager"
+        action: "Assign to appropriate Tier 2 specialist(s)"
+        routing_logic: |
+          If malware_indicators detected → Tier2-MalwareAnalyzer
+          If network_anomalies detected → Tier2-NetworkInvestigator
+          If identity_based_attack → Tier2-IdentityAnalyzer
+          Assign Tier2-ThreatAssessor as lead coordinator
+
+      step_5:
+        name: "Notification"
+        performer: "Alert Automation"
+        action: "Notify Tier 2 team of escalation"
+        notification_method: "Email + Slack"
+        escalation_level: "Based on severity and criteria met"
+
+      step_6:
+        name: "SLA Clock Starts"
+        performer: "System"
+        action: "Begin Tier 2 response time SLA"
+        sla_limits:
+          critical: "5 minutes maximum response"
+          high: "15 minutes maximum response"
+          medium: "30 minutes maximum response"
+
+    sla_response_times:
+      critical: "5 minutes"
+      high: "15 minutes"
+      medium: "30-60 minutes"
+      low: "4 hours (escalation uncommon for low severity)"
+
+    handoff_requirements:
+      - "All evidence preservation requirements documented"
+      - "Chain of custody initiated if forensic analysis likely"
+      - "Tier 2 specialist has full context before starting investigation"
+      - "Escalation rationale clearly documented"
+      - "Initial assessment completed by Tier 1"
+
+  # ============================================================================
+  # TIER 2 TO TIER 3 ESCALATION
+  # ============================================================================
+  tier2_to_tier3:
+    description: "Escalation from Tier 2 (Investigation) to Tier 3 (Forensic Analysis)"
+    escalation_authority: "Tier2-ThreatAssessor (coordinator)"
+    target_tier: "Tier 3 Forensic Team"
+    escalation_agents:
+      source: "tier2-threat-assessor"
+      destinations:
+        - "tier3-forensic-investigator"
+        - "tier3-incident-reconstructor"
+        - "tier3-evidence-collector"
+        - "tier3-root-cause-analyzer"
+
+    escalation_criteria:
+      automatic_escalation:
+        - criterion: "CONFIRMED_INSIDER_THREAT"
+          description: "Evidence indicates internal malicious actor"
+          trigger: "insider_threat_score >= 90 OR employee_credential_misuse_confirmed"
+          response_time: "30 minutes"
+          action: "Escalate to Tier 3 + notify IR team + legal"
+          indicators:
+            - "Privileged account abuse by known employee"
+            - "Unauthorized data access pattern from specific user"
+            - "Intentional policy violation by employee"
+
+        - criterion: "CONFIRMED_INCIDENT_WITH_IMPACT"
+          description: "Incident confirmed with confirmed data compromise or system impact"
+          trigger: "incident_confirmed == true AND (data_compromised OR systems_affected >= 3)"
+          response_time: "immediately (0 seconds)"
+          action: "Escalate to Tier 3 + preserve all evidence + notify leadership"
+          includes:
+            - "Verified data exfiltration"
+            - "3+ systems compromised"
+            - "Critical infrastructure affected"
+            - "Regulatory requirements triggered"
+
+        - criterion: "ADVANCED_PERSISTENT_THREAT"
+          description: "Evidence of APT or sophisticated attacker"
+          trigger: "apt_indicators >= 5 OR sophisticated_evasion_techniques_detected"
+          response_time: "30 minutes"
+          action: "Escalate to Tier 3 + threat intelligence team"
+          indicators:
+            - "Custom malware with anti-analysis capabilities"
+            - "Living-off-the-land techniques detected"
+            - "Rootkit or kernel-level persistence"
+            - "Multi-stage attack chain"
+
+        - criterion: "SUSPECTED_RANSOMWARE_ACTIVITY"
+          description: "Evidence suggests ransomware deployment or testing"
+          trigger: "ransomware_indicators >= 3 OR encryption_scanning_detected"
+          response_time: "10 minutes"
+          action: "Immediate escalation + activate incident response plan"
+          indicators:
+            - "Bulk file encryption detected"
+            - "Master boot record modification"
+            - "Ransom note creation"
+            - "Shadow copy deletion"
+
+        - criterion: "EVIDENCE_CHAIN_REQUIRED"
+          description: "Legal or regulatory procedures require forensic chain of custody"
+          trigger: "legal_hold_required == true OR regulatory_investigation_initiated"
+          response_time: "1 hour"
+          action: "Escalate to Tier 3 with forensic requirements"
+          legal_considerations:
+            - "Chain of custody must be maintained"
+            - "All evidence must be legally obtained"
+            - "Forensic analyst credentials documented"
+            - "Report admissible in court proceeding"
+
+      manual_escalation:
+        - criterion: "TIER2_RECOMMENDATION"
+          description: "Tier 2 investigator determines forensic analysis is necessary"
+          trigger: "tier2_escalation_request"
+          response_time: "30 minutes to 2 hours"
+          action: "Escalate with detailed justification"
+          required_documentation:
+            - investigation_findings: "Complete Tier 2 report"
+            - escalation_justification: "Why Tier 3 forensics needed"
+            - evidence_summary: "Key artifacts requiring deep analysis"
+            - timeline_of_events: "Preliminary sequence of events"
+            - affected_systems: "List of systems to analyze"
+
+      conditional_escalation:
+        - criterion: "IMPOSSIBLE_TO_RESOLVE_AT_TIER2"
+          description: "Tier 2 unable to determine root cause without forensics"
+          trigger: "tier2_investigation_stalled AND forensic_analysis_necessary"
+          response_time: "4-8 hours"
+          action: "Escalate to Tier 3 for deep analysis"
+          example: "Unknown rootkit suspected but cannot confirm without memory/disk analysis"
+
+        - criterion: "PERSISTENCE_MECHANISM_UNKNOWN"
+          description: "Attacker persistence method not identified by Tier 2"
+          trigger: "attacker_persistence_confirmed BUT method_unknown"
+          response_time: "2-4 hours"
+          action: "Escalate to Tier 3 for forensic discovery"
+          investigation_goal: "Identify how attacker maintains access"
+
+        - criterion: "LATERAL_MOVEMENT_SCOPE_UNKNOWN"
+          description: "Full extent of lateral movement not determined by Tier 2"
+          trigger: "lateral_movement_detected AND full_scope_unknown"
+          response_time: "2-4 hours"
+          action: "Escalate to Tier 3 for comprehensive analysis"
+          investigation_goal: "Determine all compromised systems and accounts"
+
+    escalation_process:
+      step_1:
+        name: "Tier 2 Investigation Conclusion"
+        performer: "Tier 2-ThreatAssessor"
+        action: "Complete investigation analysis and determine if escalation needed"
+        output: "tier2_investigation_report"
+
+      step_2:
+        name: "Escalation Decision"
+        performer: "Tier2-ThreatAssessor (coordinator)"
+        action: "Evaluate escalation criteria based on findings"
+        decision_points:
+          - "Does incident meet escalation criteria?"
+          - "Is forensic analysis necessary for root cause?"
+          - "Are legal/regulatory requirements triggered?"
+          - "Do we need evidence preservation?"
+
+      step_3:
+        name: "Evidence Preservation"
+        performer: "Tier2-MalwareAnalyzer (or all Tier 2 agents)"
+        action: "Stop active investigation, preserve all evidence"
+        preservation_requirements:
+          - "Stop live system access (preserve volatile state)"
+          - "Snapshot memory state if not already captured"
+          - "Disk imaging initiated if required"
+          - "Evidence tagged and logged"
+          - "Chain of custody documentation started"
+
+      step_4:
+        name: "Forensic Case Creation"
+        performer: "Tier3-EvidenceCollector"
+        action: "Create forensic case with evidence manifest"
+        includes:
+          - "Complete Tier 2 investigation report"
+          - "All evidence artifacts collected"
+          - "Timeline of events identified so far"
+          - "Hypotheses to test in forensic analysis"
+          - "Systems identified for forensic analysis"
+          - "Chain of custody documentation"
+
+      step_5:
+        name: "Tier 3 Assignment"
+        performer: "Tier 3 Case Coordinator"
+        action: "Assign forensic specialists based on case characteristics"
+        assignment_routing: |
+          Assign Tier3-EvidenceCollector for evidence management
+          Assign Tier3-ForensicInvestigator for system analysis
+          Assign Tier3-IncidentReconstructor for timeline analysis
+          Assign Tier3-RootCauseAnalyzer as lead coordinator
+
+      step_6:
+        name: "Notification"
+        performer: "Alert Automation"
+        action: "Notify Tier 3 team and leadership of escalation"
+        notification_method: "Email + Slack + Phone"
+        escalation_level: "Two-level escalation (Tier 1 → Tier 2 → Tier 3)"
+
+      step_7:
+        name: "Forensic SLA Clock Starts"
+        performer: "System"
+        action: "Begin Tier 3 response and forensic analysis SLA"
+        sla_limits:
+          critical_incident: "4 hours to begin analysis"
+          high_priority: "8 hours to begin analysis"
+          medium_priority: "24 hours to begin analysis"
+
+    sla_response_times:
+      critical: "4 hours to begin forensic analysis"
+      high: "8 hours to begin forensic analysis"
+      medium: "24 hours to begin forensic analysis"
+      forensic_completion: "48-72 hours for initial forensic report"
+
+    handoff_requirements:
+      - "Complete Tier 2 investigation report provided"
+      - "All collected evidence securely transferred"
+      - "Chain of custody documentation complete and signed"
+      - "Evidence integrity verified (hash values, signatures)"
+      - "Tier 3 specialists briefed on investigation so far"
+      - "Forensic analysis scope clearly defined"
+      - "Legal/regulatory requirements documented"
+      - "Evidence labels and case number assigned"
+
+  # ============================================================================
+  # FAILURE AND REMEDIATION ESCALATION
+  # ============================================================================
+  failure_escalation:
+    description: "Escalation when investigation shows no compromise (false positive)"
+
+    tier1_false_positive:
+      trigger: "FP confirmed during Tier 1 investigation"
+      action: "Close with FP classification"
+      escalation: false
+      documentation: "Record as FP for trend analysis"
+
+    tier2_false_positive:
+      trigger: "Tier 2 investigation concludes no actual compromise"
+      action: "Close investigation with detailed reasoning"
+      escalation: false
+      notification: "Notify Tier 1 of FP classification for feedback"
+      improvement: "Analyze why Tier 1 escalated for calibration"
+
+    tier2_inconclusive:
+      trigger: "Tier 2 cannot determine conclusively without forensic analysis"
+      action: "Escalate to Tier 3 for definitive analysis"
+      escalation: true
+      reasoning: "Better to escalate than operate under uncertainty"
+
+  # ============================================================================
+  # INTEGRATION POINTS AND DEPENDENCIES
+  # ============================================================================
+  integration_points:
+    case_management:
+      description: "Cases follow through all tiers with continuity"
+      case_id_format: "INC-YYYY-##### (incident number)"
+      case_tracking: "Follows alert from Tier 1 inception through Tier 3 resolution"
+      owners:
+        tier1: "Tier1-AlertRouter (initial owner)"
+        tier2: "Tier2-ThreatAssessor (investigation owner)"
+        tier3: "Tier3-RootCauseAnalyzer (forensic owner)"
+
+    communication_channels:
+      tier1_to_tier2:
+        - "Email: tier1-escalations@purplexlab.com → tier2-team@purplexlab.com"
+        - "Slack: #tier1-escalations"
+        - "Case management system: Investigation case ticket"
+      tier2_to_tier3:
+        - "Email: tier2-escalations@purplexlab.com → tier3-forensic@purplexlab.com"
+        - "Slack: #tier2-escalations"
+        - "Case management system: Forensic case ticket"
+
+    data_handoff_format:
+      tier1_to_tier2:
+        - "Investigation case export (JSON/YAML)"
+        - "Evidence artifacts bundle"
+        - "Alert timeline"
+        - "Enrichment context"
+        - "Analyst notes and observations"
+
+      tier2_to_tier3:
+        - "Investigation report (PDF + structured data)"
+        - "Evidence manifest with hashes"
+        - "Preliminary findings and hypotheses"
+        - "System/user list for analysis"
+        - "Chain of custody documentation"
+
+    kpi_metrics:
+      escalation_rate:
+        tier1_to_tier2: "Target: 15-25% of alerts"
+        tier2_to_tier3: "Target: 5-10% of investigations"
+
+      sla_compliance:
+        tier1_escalation_decision: "Target: 95% within SLA"
+        tier2_escalation_decision: "Target: 95% within SLA"
+        tier3_analysis_start: "Target: 90% within SLA"
+
+      false_positive_rate:
+        tier1: "Target: < 15% escalated as FP"
+        tier2: "Target: < 5% escalated as FP"
+
+  # ============================================================================
+  # ESCALATION OVERRIDE PROCEDURES
+  # ============================================================================
+  override_procedures:
+    description: "When to escalate outside normal criteria"
+
+    security_leadership_override:
+      trigger: "SOC Manager or Security Director decision"
+      authority: "Can force escalation to any tier regardless of criteria"
+      documentation_required: "Reason for override must be documented"
+      notification: "All involved parties must be notified"
+
+    law_enforcement_trigger:
+      trigger: "Law enforcement or legal department requests investigation"
+      action: "Immediately escalate to Tier 3 with legal hold"
+      chain_of_custody: "Strict chain of custody procedures activate"
+      notification: "CEO/General Counsel notified"
+
+    incident_response_plan_activation:
+      trigger: "Incident Response Plan activated by Security Leadership"
+      action: "All tiers engaged simultaneously for critical incidents"
+      coordination: "IR coordinator becomes primary case owner"
+      escalation_model: "Parallel investigation across all tiers"
+
+  # ============================================================================
+  # PERFORMANCE AND MONITORING
+  # ============================================================================
+  performance_tracking:
+    escalation_decision_quality:
+      metric: "Percentage of escalations that were appropriate"
+      target: "> 85%"
+      review_frequency: "Monthly"
+
+    escalation_speed:
+      metric: "Time from escalation trigger to actual escalation"
+      tier1_to_tier2_target: "5-30 minutes (depending on automation vs manual)"
+      tier2_to_tier3_target: "30 minutes - 2 hours"
+
+    false_positive_feedback:
+      metric: "Track FP rate by escalation criteria"
+      goal: "Improve criteria accuracy over time"
+      review: "Quarterly analysis of FP patterns"
+
+    tier_capacity:
+      metric: "Queue depth and response time by tier"
+      alert: "If Tier 2 queue > 20 items, escalation criteria tightened"
+      alert: "If Tier 3 queue > 5 items, escalation criteria tightened"

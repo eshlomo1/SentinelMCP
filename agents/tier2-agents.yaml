@@ -94,27 +94,47 @@ tier2_agents:
 - id: "tier2-threat-assessor"
   role_id: "t2-threat-assessment"
   name: "Tier2-ThreatAssessor"
-  role: "Threat Severity & Impact Assessment"
-  description: "Assesses overall threat severity, business impact, and escalation requirements"
+  role: "Threat Assessment & Tier 3 Escalation Authority"
+  description: "Assesses overall threat severity, consolidates Tier 2 findings, and determines if escalation to Tier 3 (Forensic) is required; primary escalation decision authority for Tier 2"
   capabilities:
   - severity_scoring
   - impact_analysis
   - risk_quantification
   - escalation_decision
   - incident_correlation
+  - findings_consolidation
+  - forensic_coordination
+  escalation_to: "tier3"
+  escalation_authority: true
+  escalation_criteria:
+    automatic_triggers:
+    - "CONFIRMED_INCIDENT_WITH_DATA_BREACH"
+    - "3_PLUS_SYSTEMS_COMPROMISED"
+    - "ADVANCED_PERSISTENT_THREAT_INDICATORS"
+    - "RANSOMWARE_ACTIVITY_DETECTED"
+    - "INSIDER_THREAT_CONFIRMED"
+    - "UNKNOWN_PERSISTENCE_MECHANISM"
+    - "INCOMPLETE_LATERAL_MOVEMENT_SCOPE"
+    - "LEGAL_FORENSIC_REQUIREMENTS"
+    escalation_rationale: "Automatic escalation to Tier 3 Forensic team"
+    sla_response_time: "30 minutes to 4 hours"
   assessment_factors:
   - asset_criticality
   - data_sensitivity
   - number_of_affected_systems
   - threat_actor_capability
   - business_context
+  - forensic_analysis_necessity
   output_format: "threat_assessment_report"
   skills:
   - risk_assessment
   - impact_analysis
   - business_context_analysis
   - escalation_decision_making
-  sla_response_time: "25 minutes"
+  - findings_consolidation
+  - forensic_case_preparation
+  sla_response_time: "30 minutes"
   success_metrics:
   - escalation_accuracy: 96%
   - assessment_consistency: 94%
+  - false_positive_identification: 95%
