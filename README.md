@@ -84,15 +84,15 @@ SentinelMCP is a **battle-tested MDR framework** that brings enterprise-grade al
 
 ### What Problems Does It Solve?
 
-| Problem | SentinelMCP Solution |
-|---------|---------------------|
-| 🚨 **Alert Fatigue** | Automatic false positive elimination + intelligent routing |
-| 🔍 **Investigation Confusion** | Clear escalation decision trees + documented procedures |
-| ⏰ **SLA Breaches** | Automatic escalation when deadlines approach |
-| 💾 **Evidence Loss** | Forensic-grade case management with chain of custody |
-| 👥 **Skills Gaps** | Role + skill matrix ensures right analyst gets right alert |
-| 📊 **Inconsistent Process** | Standardized workflows prevent ad-hoc decisions |
-| 🔀 **Context Loss** | Alert enrichment at every tier preserves investigation context |
+| Problem                        | SentinelMCP Solution                                           |
+| ------------------------------ | -------------------------------------------------------------- |
+| 🚨 **Alert Fatigue**           | Automatic false positive elimination + intelligent routing     |
+| 🔍 **Investigation Confusion** | Clear escalation decision trees + documented procedures        |
+| ⏰ **SLA Breaches**            | Automatic escalation when deadlines approach                   |
+| 💾 **Evidence Loss**           | Forensic-grade case management with chain of custody           |
+| 👥 **Skills Gaps**             | Role + skill matrix ensures right analyst gets right alert     |
+| 📊 **Inconsistent Process**    | Standardized workflows prevent ad-hoc decisions                |
+| 🔀 **Context Loss**            | Alert enrichment at every tier preserves investigation context |
 
 ---
 
@@ -152,12 +152,12 @@ grep "workspace_id" config.yaml
 
 Each tier has **crystal-clear responsibilities**, **defined escalation triggers**, and **measurable outcomes**:
 
-| Tier | Purpose | SLA | Agents | Key Output |
-|------|---------|-----|--------|-----------|
-| **🔴 Tier 1** | Rapid Triage | 5-15 min | 4 | Normalized alert + decision |
-| **🟠 Tier 2** | Deep Analysis | 30-60 min | 4 | Investigation report + escalation decision |
-| **🟡 Tier 3** | Forensic Excellence | 8 hours | 4 | Root cause + evidence package |
-| **🟢 Cloud Hunter** | Proactive Hunt | 4 hours | 4 | Threat intel + anomaly data |
+| Tier                | Purpose             | SLA       | Agents | Key Output                                 |
+| ------------------- | ------------------- | --------- | ------ | ------------------------------------------ |
+| **🔴 Tier 1**       | Rapid Triage        | 5-15 min  | 4      | Normalized alert + decision                |
+| **🟠 Tier 2**       | Deep Analysis       | 30-60 min | 4      | Investigation report + escalation decision |
+| **🟡 Tier 3**       | Forensic Excellence | 8 hours   | 4      | Root cause + evidence package              |
+| **🟢 Cloud Hunter** | Proactive Hunt      | 4 hours   | 4      | Threat intel + anomaly data                |
 
 ### Smart Escalation Engine
 
@@ -177,15 +177,15 @@ See [DOCS/OPERATIONS/TIER_INTEGRATION.md](DOCS/OPERATIONS/TIER_INTEGRATION.md) �
 
 Complete documentation organized by **role** and **use case**:
 
-| Role | Documentation | Time |
-|------|--------------|------|
-| 🔴 **Tier 1 Analyst** | [Alert Triage Procedures](DOCS/OPERATIONS/TIER1_OPERATIONS.md) | 10 min |
+| Role                       | Documentation                                                       | Time   |
+| -------------------------- | ------------------------------------------------------------------- | ------ |
+| 🔴 **Tier 1 Analyst**      | [Alert Triage Procedures](DOCS/OPERATIONS/TIER1_OPERATIONS.md)      | 10 min |
 | 🟠 **Tier 2 Investigator** | [Investigation Workflow](DOCS/OPERATIONS/INVESTIGATION_WORKFLOW.md) | 10 min |
-| 🟡 **Tier 3 Forensic** | [Forensic Deep-Dive](DOCS/OPERATIONS/FORENSIC_PROCEDURES.md) | 10 min |
-| 🏗️ **Architect** | [System Design](DOCS/ARCHITECTURE/ARCHITECTURE_OVERVIEW.md) | 15 min |
-| 👨‍💻 **Developer** | [Implementation Guide](DOCS/DEVELOPMENT/README.md) | 10 min |
-| ❓ **Need Quick Answer?** | [FAQ & Reference](DOCS/REFERENCE/QUICK_REFERENCE.md) | 2 min |
-| 🆘 **Troubleshooting** | [Support & Issues](DOCS/SUPPORT/README.md) | 5 min |
+| 🟡 **Tier 3 Forensic**     | [Forensic Deep-Dive](DOCS/OPERATIONS/FORENSIC_PROCEDURES.md)        | 10 min |
+| 🏗️ **Architect**           | [System Design](DOCS/ARCHITECTURE/ARCHITECTURE_OVERVIEW.md)         | 15 min |
+| 👨‍💻 **Developer**           | [Implementation Guide](DOCS/DEVELOPMENT/README.md)                  | 10 min |
+| ❓ **Need Quick Answer?**  | [FAQ & Reference](DOCS/REFERENCE/QUICK_REFERENCE.md)                | 2 min  |
+| 🆘 **Troubleshooting**     | [Support & Issues](DOCS/SUPPORT/README.md)                          | 5 min  |
 
 ### Documentation Directory
 
@@ -332,7 +332,7 @@ This comprehensive guide covers:
 SentinelMCP ingest from **8 major sources** with intelligent enrichment at every tier:
 
 - ✅ **Microsoft Defender XDR** — Endpoint, email, cloud app threats
-- ✅ **Entra ID** — Authentication, identity risk events  
+- ✅ **Entra ID** — Authentication, identity risk events
 - ✅ **Azure Security Center** — Infrastructure + vulnerability data
 - ✅ **AWS CloudTrail** — Cloud infrastructure activity
 - ✅ **GCP Audit Logs** — Google Cloud operations
@@ -389,51 +389,53 @@ slas:
 
 ### Tier 1: Rapid Alert Triage (SLA: 5-15 min)
 
-| Agent | Role | Purpose |
-|-------|------|---------|
-| **AlertParser** | t1-alert-normalization | Convert raw alerts to standard format |
-| **AlertEnricher** | t1-alert-enrichment | Add context from threat intel + directory |
-| **AlertRouter** | t1-alert-routing | Intelligently route to appropriate tier |
-| **FPEliminator** | t1-fp-detection | Eliminate 60-80% of false positives |
+| Agent             | Role                   | Purpose                                   |
+| ----------------- | ---------------------- | ----------------------------------------- |
+| **AlertParser**   | t1-alert-normalization | Convert raw alerts to standard format     |
+| **AlertEnricher** | t1-alert-enrichment    | Add context from threat intel + directory |
+| **AlertRouter**   | t1-alert-routing       | Intelligently route to appropriate tier   |
+| **FPEliminator**  | t1-fp-detection        | Eliminate 60-80% of false positives       |
 
 ### Tier 2: Deep Investigation (SLA: 30-60 min)
 
-| Agent | Role | Purpose |
-|-------|------|---------|
-| **MalwareAnalyzer** | t2-malware-analysis | Analyze indicators of compromise |
+| Agent                   | Role                     | Purpose                             |
+| ----------------------- | ------------------------ | ----------------------------------- |
+| **MalwareAnalyzer**     | t2-malware-analysis      | Analyze indicators of compromise    |
 | **NetworkInvestigator** | t2-network-investigation | Track lateral movement + data flows |
-| **IdentityAnalyzer** | t2-identity-analysis | Investigate anomalous user activity |
-| **ThreatAssessor** | t2-threat-assessment | Risk + impact evaluation |
+| **IdentityAnalyzer**    | t2-identity-analysis     | Investigate anomalous user activity |
+| **ThreatAssessor**      | t2-threat-assessment     | Risk + impact evaluation            |
 
 ### Tier 3: Forensic Excellence (SLA: 8-24 hours)
 
-| Agent | Role | Purpose |
-|-------|------|---------|
-| **ForensicInvestigator** | t3-forensic-investigation | Deep forensic analysis + evidence |
+| Agent                     | Role                       | Purpose                                |
+| ------------------------- | -------------------------- | -------------------------------------- |
+| **ForensicInvestigator**  | t3-forensic-investigation  | Deep forensic analysis + evidence      |
 | **IncidentReconstructor** | t3-incident-reconstruction | Timeline + attack chain reconstruction |
-| **EvidenceCollector** | t3-evidence-collection | Chain of custody + legal preservation |
-| **RootCauseAnalyzer** | t3-root-cause-analysis | Determine how + why incidents occurred |
+| **EvidenceCollector**     | t3-evidence-collection     | Chain of custody + legal preservation  |
+| **RootCauseAnalyzer**     | t3-root-cause-analysis     | Determine how + why incidents occurred |
 
 ### Cloud Hunter: Proactive Threat Hunt (SLA: 4 hours, parallel)
 
-| Agent | Role | Purpose |
-|-------|------|---------|
+| Agent                      | Role                       | Purpose                          |
+| -------------------------- | -------------------------- | -------------------------------- |
 | **InfrastructureAnalyzer** | ch-infrastructure-security | Cloud resource + config analysis |
-| **LogAnomalyDetector** | ch-log-analysis | ML-powered anomaly detection |
-| **ThreatIntelEnricher** | ch-threat-intelligence | External threat correlation |
-| **ProactiveHunter** | ch-proactive-hunting | Hypothesis-driven threat hunting |
+| **LogAnomalyDetector**     | ch-log-analysis            | ML-powered anomaly detection     |
+| **ThreatIntelEnricher**    | ch-threat-intelligence     | External threat correlation      |
+| **ProactiveHunter**        | ch-proactive-hunting       | Hypothesis-driven threat hunting |
 
 ---
 
 ## ✨ Why SentinelMCP?
 
 **vs. Manual Alert Triage:**
+
 - ⚡ **10x Faster** — Automated routing vs. manual sorting
 - 🎯 **98% Accuracy** — Consistent decision logic vs. human variance
 - 📈 **60-80% Fewer FPs** — Automated false positive elimination
 - 🔒 **Forensic-Ready** — Chain of custody from day one
 
 **vs. Legacy SIEM Workflows:**
+
 - 🧠 **Intelligent Escalation** — ML-driven decisions vs. threshold-based
 - 🔄 **Tier Specialization** — Role-specific tools vs. one-size-fits-all
 - 📊 **SLA Automation** — Auto-escalate vs. manual deadline tracking
@@ -452,14 +454,14 @@ slas:
 
 ## 📋 About This Project
 
-| Property | Value |
-|----------|-------|
-| **License** | MIT |
-| **Version** | 1.0.0 |
-| **Status** | 🟢 Production |
-| **Organization** | PurpleX Lab |
-| **Last Updated** | February 14, 2026 |
-| **Repository** | [github.com/eshlomo1/SentinelMCP](https://github.com/eshlomo1/SentinelMCP) |
+| Property         | Value                                                                      |
+| ---------------- | -------------------------------------------------------------------------- |
+| **License**      | MIT                                                                        |
+| **Version**      | 1.0.0                                                                      |
+| **Status**       | 🟢 Production                                                              |
+| **Organization** | PurpleX Lab                                                                |
+| **Last Updated** | February 14, 2026                                                          |
+| **Repository**   | [github.com/eshlomo1/SentinelMCP](https://github.com/eshlomo1/SentinelMCP) |
 
 ---
 
