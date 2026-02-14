@@ -16,6 +16,7 @@ Effective alert handling ensures rapid detection response and prevents false pos
 - **Document decisions and findings** - Record why escalations occurred, what was found, and outcomes
 
 **Key Metrics:**
+
 - Time from alert to triage decision
 - False positive rate
 - Escalation rate by severity
@@ -32,6 +33,7 @@ Structured investigation methodology ensures quality findings and proper evidenc
 - **Escalate when scope grows beyond tier capability** - Recognize complexity signals that require Tier 3 forensic analysis
 
 **Chain of Custody Template:**
+
 - Evidence ID
 - Collection date/time
 - Collected by (agent name, analyst)
@@ -50,6 +52,7 @@ Deep forensic investigation follows legal and technical standards:
 - **Provide detailed root cause analysis** - Determine how the incident occurred, not just that it occurred
 
 **Forensic Investigation Steps:**
+
 1. Preserve evidence in original state
 2. Document system configuration and state
 3. Analyze evidence for root cause
@@ -68,6 +71,7 @@ Proactive threat hunting identifies emerging threats before they escalate:
 - **Feed findings to investigation tier** - Escalate promising leads to Tier 2 for formal investigation
 
 **Hunting Priorities:**
+
 1. Privileged account anomalies
 2. Lateral movement indicators
 3. Data exfiltration patterns
@@ -82,14 +86,15 @@ Maintaining SLA targets ensures timely responses to threats:
 
 ### SLA Response Times
 
-| Severity | Tier 1 Triage | Tier 2 Investigate | Tier 3 Forensic | Cloud Hunting |
-|----------|---------------|-------------------|-----------------|---------------|
-| **Critical** | 5 min | 30 min | 8 hours | 4 hours |
-| **High** | 15 min | 60 min | 16 hours | 4 hours |
-| **Medium** | 30 min | 2 hours | 24 hours | 4 hours |
-| **Low** | 1 hour | 4 hours | 48 hours | 4 hours |
+| Severity     | Tier 1 Triage | Tier 2 Investigate | Tier 3 Forensic | Cloud Hunting |
+| ------------ | ------------- | ------------------ | --------------- | ------------- |
+| **Critical** | 5 min         | 30 min             | 8 hours         | 4 hours       |
+| **High**     | 15 min        | 60 min             | 16 hours        | 4 hours       |
+| **Medium**   | 30 min        | 2 hours            | 24 hours        | 4 hours       |
+| **Low**      | 1 hour        | 4 hours            | 48 hours        | 4 hours       |
 
 **SLA Escalation Rules:**
+
 - Alert approaching SLA threshold → Escalate to next tier
 - SLA breach → Management notification required
 - Repeated breaches → Review tier capacity and staffing
