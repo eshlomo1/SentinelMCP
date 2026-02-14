@@ -9,13 +9,16 @@ with 16 agents, 16 roles, 40+ skills, and 5 operational workflows.
 1. START: README.md (5 min)
    └─ Overview of the entire hierarchy
 
-2. LEARN: HIERARCHY_SUMMARY.md (10 min)
+2. NEW: TIER_INTEGRATION.md (10 min)
+   └─ Escalation between Tier 1, Tier 2, and Tier 3 (Forensic)
+
+3. LEARN: HIERARCHY_SUMMARY.md (10 min)
    └─ Comprehensive summary with all components
 
-3. VISUALIZE: ARCHITECTURE_DIAGRAM.md (5 min)
+4. VISUALIZE: ARCHITECTURE_DIAGRAM.md (5 min)
    └─ Visual diagrams of the hierarchy
 
-4. QUICK: QUICK_REFERENCE.md (3 min)
+5. QUICK: QUICK_REFERENCE.md (3 min)
    └─ Quick reference guide and checklist
 
 # DIRECTORY MAP

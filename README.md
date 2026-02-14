@@ -26,6 +26,7 @@ A comprehensive, production-ready Managed Detection and Response (MDR) framework
 ```
 SentinelMCP/
 ├── README.md                          # This file - Project overview
+├── TIER_INTEGRATION.md                # Tier-to-tier escalation framework
 ├── HIERARCHY_README.md                # Hierarchy overview and organization
 ├── INDEX.md                           # Navigation index and quick links
 ├── HIERARCHY_SUMMARY.md               # Complete component summary
@@ -58,6 +59,7 @@ SentinelMCP/
 │
 └── data/                              # Data and configuration
     ├── config.yaml                    # Workspace settings, SLAs, escalation triggers
+    ├── tier-integration.yaml          # Tier-to-tier escalation criteria and processes
     ├── data-sources.yaml              # 8 integrated data sources and patterns
     ├── workflows.yaml                 # 5 operational workflows with steps
     └── escalation-paths.yaml          # 4 escalation matrices with templates
@@ -316,13 +318,14 @@ Data Sources:      8 (1 file)
 
 ## Documentation Files
 
-| Document | Purpose | Read Time |
-| -------- | ------- | --------- |
-| [HIERARCHY_SUMMARY.md](HIERARCHY_SUMMARY.md) | Complete overview of all components | 15 min |
-| [INDEX.md](INDEX.md) | Navigation guide and quick links | 5 min |
-| [QUICK_REFERENCE.md](QUICK_REFERENCE.md) | Quick lookup and checklists | 3 min |
-| [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) | Visual architecture and flows | 5 min |
-| [HIERARCHY_README.md](HIERARCHY_README.md) | Hierarchy-specific documentation | 5 min |
+| Document                                             | Purpose                                                  | Read Time |
+| ---------------------------------------------------- | -------------------------------------------------------- | --------- |
+| [TIER_INTEGRATION.md](TIER_INTEGRATION.md)           | Tier-to-tier escalation framework and decision criteria  | 10 min    |
+| [HIERARCHY_SUMMARY.md](HIERARCHY_SUMMARY.md)         | Complete overview of all components                      | 15 min    |
+| [INDEX.md](INDEX.md)                                 | Navigation guide and quick links                         | 5 min     |
+| [QUICK_REFERENCE.md](QUICK_REFERENCE.md)             | Quick lookup and checklists                              | 3 min     |
+| [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md)   | Visual architecture and flows                            | 5 min     |
+| [HIERARCHY_README.md](HIERARCHY_README.md)           | Hierarchy-specific documentation                         | 5 min     |
 
 ## Best Practices
 
