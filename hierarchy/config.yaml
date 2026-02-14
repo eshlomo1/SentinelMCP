@@ -1,0 +1,92 @@
+hierarchy:
+  name: Sentinel MCP Hierarchy
+  version: "1.0.0"
+  organization: PurpleX Lab
+  environment: Production
+  workspace_id: "72e316b2-cc46-4d4b-93e1-3561ebae0b82"
+  tenant_id: "dbf22f42-e951-4d07-8579-1400a6f9a473"
+  subscription_id: "4167334c-383c-4f4a-98fa-f4f591d709b3"
+
+tiers:
+  tier1:
+    name: "MDR Tier 1 - Alert Triage & Routing"
+    description: "Initial alert triage, normalization, enrichment, and routing"
+    sla_hours: 1
+    escalation_percentage: 15
+    agent_count: 4
+    coverage: [ "Alert Parsing", "Enrichment", "Routing", "False Positive Detection" ]
+
+  tier2:
+    name: "MDR Tier 2 - Investigation & Analysis"
+    description: "In-depth investigation, threat assessment, and preliminary analysis"
+    sla_hours: 4
+    escalation_percentage: 5
+    agent_count: 4
+    coverage: [ "Malware Analysis", "Network Investigation", "Identity Analysis", "Threat Assessment" ]
+
+  tier3:
+    name: "Forensic (Tier 3) - Deep Forensics"
+    description: "Deep forensic analysis, incident reconstruction, and root cause analysis"
+    sla_hours: 24
+    escalation_percentage: null
+    agent_count: 4
+    coverage: [ "Forensic Investigation", "Incident Reconstruction", "Evidence Collection", "Root Cause Analysis" ]
+
+  cloud_hunter:
+    name: "Cloud Threat Hunter"
+    description: "Proactive cloud infrastructure hunting and threat intelligence integration"
+    sla_hours: 8
+    continuous: true
+    agent_count: 4
+    coverage: [ "Infrastructure Analysis", "Log Anomaly Detection", "Threat Intelligence", "Proactive Hunting" ]
+
+integrations:
+  data_sources:
+  - microsoft_defender_xdr
+  - entra_id
+  - azure_activity_logs
+  - cloud_app_security
+  - aws_cloudtrail
+  - gcp_audit_logs
+
+  output_channels:
+  - servicenow_itsm
+  - teams_notifications
+  - slack_alerts
+  - siem_forwarding
+
+escalation_matrix:
+  tier1_to_tier2_triggers:
+  - severity: high
+  - severity: critical
+  - requires_manual_review: true
+  - suspicious_patterns_detected: true
+
+  tier2_to_tier3_triggers:
+  - severity: critical
+  - evidence_of_compromise: true
+  - requires_forensics: true
+  - multi_system_impact: true
+
+response_times:
+  tier1:
+    low: "4 hours"
+    medium: "2 hours"
+    high: "1 hour"
+    critical: "15 minutes"
+
+  tier2:
+    low: "24 hours"
+    medium: "8 hours"
+    high: "4 hours"
+    critical: "1 hour"
+
+  tier3:
+    low: "72 hours"
+    medium: "48 hours"
+    high: "24 hours"
+    critical: "8 hours"
+
+  cloud_hunter:
+    continuous: "ongoing"
+    incident_response: "1 hour"

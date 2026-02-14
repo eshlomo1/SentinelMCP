@@ -1,0 +1,247 @@
+roles_matrix:
+  tier1_roles:
+  - role_id: "t1-alert-normalization"
+    role_name: "Alert Normalization Specialist"
+    primary_agent: "tier1-alert-parser"
+    responsibilities:
+    - "Parse and normalize incoming alerts"
+    - "Map disparate alert formats to unified schema"
+    - "Validate alert data integrity"
+    - "Handle parsing exceptions"
+    required_skills:
+    - alert_parsing
+    - data_normalization
+    - regex_mastery
+    decision_authority: "low"
+    escalation_authority: "none"
+
+  - role_id: "t1-alert-enrichment"
+    role_name: "Alert Enrichment Specialist"
+    primary_agent: "tier1-alert-enricher"
+    responsibilities:
+    - "Enrich alerts with threat intel"
+    - "Add contextual information"
+    - "Perform historical correlation"
+    - "Assess initial risk"
+    required_skills:
+    - threat_intelligence_integration
+    - context_enrichment
+    - data_correlation
+    decision_authority: "low"
+    escalation_authority: "none"
+
+  - role_id: "t1-alert-routing"
+    role_name: "Alert Router"
+    primary_agent: "tier1-alert-router"
+    responsibilities:
+    - "Route alerts to appropriate destinations"
+    - "Assign initial severity"
+    - "Make escalation decisions"
+    - "Assign to appropriate workflow"
+    required_skills:
+    - alert_classification
+    - routing_logic
+    - business_context_knowledge
+    decision_authority: "medium"
+    escalation_authority: "escalate_to_tier2"
+
+  - role_id: "t1-fp-detection"
+    role_name: "False Positive Analyst"
+    primary_agent: "tier1-fp-eliminator"
+    responsibilities:
+    - "Identify false positive patterns"
+    - "Suppress known benign alerts"
+    - "Refine detection rules"
+    - "Provide feedback for rule optimization"
+    required_skills:
+    - pattern_recognition
+    - false_positive_analysis
+    - alert_suppression
+    decision_authority: "medium"
+    escalation_authority: "none"
+
+  tier2_roles:
+  - role_id: "t2-malware-analysis"
+    role_name: "Malware & Threat Analyst"
+    primary_agent: "tier2-malware-analyzer"
+    responsibilities:
+    - "Analyze suspicious files and processes"
+    - "Conduct sandbox analysis"
+    - "Create detection signatures"
+    - "Determine malware family"
+    - "Assess malware capabilities"
+    required_skills:
+    - malware_analysis
+    - reverse_engineering
+    - behavior_analysis
+    decision_authority: "high"
+    escalation_authority: "escalate_to_tier3"
+
+  - role_id: "t2-network-investigation"
+    role_name: "Network Threat Analyst"
+    primary_agent: "tier2-network-investigator"
+    responsibilities:
+    - "Investigate network anomalies"
+    - "Detect C2 communications"
+    - "Analyze lateral movement"
+    - "Assess network impact"
+    required_skills:
+    - network_analysis
+    - threat_intelligence_correlation
+    - graph_analysis
+    decision_authority: "high"
+    escalation_authority: "escalate_to_tier3"
+
+  - role_id: "t2-identity-analysis"
+    role_name: "Identity & Access Analyst"
+    primary_agent: "tier2-identity-analyzer"
+    responsibilities:
+    - "Analyze authentication anomalies"
+    - "Detect privilege escalation"
+    - "Assess account compromise risk"
+    - "Identify lateral movement"
+    required_skills:
+    - identity_risk_assessment
+    - access_pattern_analysis
+    - anomaly_detection
+    decision_authority: "high"
+    escalation_authority: "escalate_to_tier3"
+
+  - role_id: "t2-threat-assessment"
+    role_name: "Threat & Impact Assessor"
+    primary_agent: "tier2-threat-assessor"
+    responsibilities:
+    - "Assess overall threat severity"
+    - "Determine business impact"
+    - "Make escalation recommendations"
+    - "Coordinate incident response"
+    required_skills:
+    - risk_assessment
+    - impact_analysis
+    - business_context_analysis
+    decision_authority: "high"
+    escalation_authority: "escalate_to_tier3"
+
+  tier3_roles:
+  - role_id: "t3-forensic-investigation"
+    role_name: "Forensic Investigator"
+    primary_agent: "tier3-forensic-investigator"
+    responsibilities:
+    - "Conduct deep forensic analysis"
+    - "Extract volatile memory artifacts"
+    - "Analyze disk forensics"
+    - "Preserve evidence integrity"
+    - "Document findings comprehensively"
+    required_skills:
+    - forensic_analysis
+    - windows_internals
+    - memory_forensics
+    decision_authority: "high"
+    escalation_authority: "legal_escalation"
+
+  - role_id: "t3-incident-reconstruction"
+    role_name: "Incident Reconstructor"
+    primary_agent: "tier3-incident-reconstructor"
+    responsibilities:
+    - "Reconstruct incident timeline"
+    - "Correlate events across systems"
+    - "Establish causality"
+    - "Map attack progression"
+    required_skills:
+    - timeline_analysis
+    - event_correlation
+    - attack_sequencing
+    decision_authority: "high"
+    escalation_authority: "legal_escalation"
+
+  - role_id: "t3-evidence-collection"
+    role_name: "Evidence Custodian"
+    primary_agent: "tier3-evidence-collector"
+    responsibilities:
+    - "Maintain chain of custody"
+    - "Preserve digital evidence"
+    - "Verify evidence integrity"
+    - "Ensure legal compliance"
+    required_skills:
+    - evidence_preservation
+    - chain_of_custody_management
+    - legal_compliance
+    decision_authority: "high"
+    escalation_authority: "legal_escalation"
+
+  - role_id: "t3-root-cause-analysis"
+    role_name: "Root Cause Analyst"
+    primary_agent: "tier3-root-cause-analyzer"
+    responsibilities:
+    - "Determine root cause"
+    - "Identify contributing factors"
+    - "Classify attack techniques"
+    - "Recommend remediation"
+    - "Document lessons learned"
+    required_skills:
+    - root_cause_analysis
+    - vulnerability_assessment
+    - attack_technique_classification
+    decision_authority: "high"
+    escalation_authority: "ciso_escalation"
+
+  cloud_hunter_roles:
+  - role_id: "ch-infrastructure-security"
+    role_name: "Cloud Infrastructure Security Analyst"
+    primary_agent: "cloud-hunter-infrastructure-analyzer"
+    responsibilities:
+    - "Assess cloud configurations"
+    - "Identify misconfigurations"
+    - "Review IAM policies"
+    - "Verify compliance"
+    required_skills:
+    - cloud_security_assessment
+    - iam_analysis
+    - compliance_knowledge
+    decision_authority: "medium"
+    escalation_authority: "escalate_to_tier2"
+
+  - role_id: "ch-log-analysis"
+    role_name: "Cloud Log & Anomaly Analyst"
+    primary_agent: "cloud-hunter-log-anomaly-detector"
+    responsibilities:
+    - "Detect log anomalies"
+    - "Establish behavioral baselines"
+    - "Detect suspicious API patterns"
+    - "Identify data exfiltration"
+    required_skills:
+    - log_analysis
+    - anomaly_detection
+    - behavioral_analysis
+    decision_authority: "medium"
+    escalation_authority: "escalate_to_tier2"
+
+  - role_id: "ch-threat-intelligence"
+    role_name: "Cloud Threat Intelligence Analyst"
+    primary_agent: "cloud-hunter-threat-intel-enricher"
+    responsibilities:
+    - "Integrate threat intelligence"
+    - "Correlate IOCs"
+    - "Track threat campaigns"
+    - "Enrich cloud telemetry"
+    required_skills:
+    - threat_intelligence_analysis
+    - ioc_correlation
+    - threat_actor_profiling
+    decision_authority: "medium"
+    escalation_authority: "escalate_to_tier2"
+
+  - role_id: "ch-proactive-hunting"
+    role_name: "Proactive Threat Hunter"
+    primary_agent: "cloud-hunter-proactive-hunter"
+    responsibilities:
+    - "Hunt for indicators of compromise"
+    - "Generate hunting hypotheses"
+    - "Search for advanced threats"
+    - "Discover new threat patterns"
+    required_skills:
+    - threat_hunting
+    - hypothesis_generation
+    - attack_technique_knowledge
+    decision_authority: "medium"
+    escalation_authority: "escalate_to_tier2"

@@ -1,0 +1,207 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Alert Schema",
+    "description": "Unified schema for alerts across all tiers",
+    "type": "object",
+    "required": [
+        "alert_id",
+        "timestamp",
+        "source_system",
+        "severity",
+        "title",
+        "description"
+    ],
+    "properties": {
+        "alert_id": {
+            "type": "string",
+            "description": "Unique alert identifier",
+            "pattern": "^[A-Z0-9-]+$"
+        },
+        "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Alert generation timestamp"
+        },
+        "source_system": {
+            "type": "string",
+            "description": "System that generated the alert",
+            "enum": [
+                "defender_xdr",
+                "azure_security",
+                "entra_id",
+                "cloud_app_security",
+                "aws",
+                "gcp",
+                "third_party_siem"
+            ]
+        },
+        "alert_type": {
+            "type": "string",
+            "description": "Category of alert",
+            "enum": [
+                "malware",
+                "phishing",
+                "exploitation",
+                "lateral_movement",
+                "privilege_escalation",
+                "data_exfiltration",
+                "misconfiguration",
+                "unauthorized_access",
+                "anomalous_activity",
+                "unknown"
+            ]
+        },
+        "severity": {
+            "type": "string",
+            "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low",
+                "informational"
+            ],
+            "description": "Alert severity level"
+        },
+        "title": {
+            "type": "string",
+            "description": "Alert title/summary"
+        },
+        "description": {
+            "type": "string",
+            "description": "Detailed alert description"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "new",
+                "investigated",
+                "resolved",
+                "escalated",
+                "suppressed"
+            ],
+            "default": "new",
+            "description": "Current alert status"
+        },
+        "affected_entities": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "entity_type": {
+                        "type": "string",
+                        "enum": [
+                            "user",
+                            "device",
+                            "ip",
+                            "domain",
+                            "file_hash",
+                            "process",
+                            "registry_key"
+                        ]
+                    },
+                    "entity_value": {
+                        "type": "string"
+                    },
+                    "risk_score": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                }
+            },
+            "description": "Affected entities"
+        },
+        "evidence": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "evidence_type": {
+                        "type": "string"
+                    },
+                    "evidence_value": {
+                        "type": "string"
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                }
+            },
+            "description": "Supporting evidence"
+        },
+        "enrichment_data": {
+            "type": "object",
+            "description": "Enriched contextual data",
+            "properties": {
+                "threat_intel_matches": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                },
+                "historical_context": {
+                    "type": "object"
+                },
+                "asset_context": {
+                    "type": "object"
+                },
+                "user_context": {
+                    "type": "object"
+                }
+            }
+        },
+        "assigned_to": {
+            "type": "string",
+            "description": "Assigned team/person"
+        },
+        "assigned_tier": {
+            "type": "string",
+            "enum": [
+                "tier1",
+                "tier2",
+                "tier3",
+                "cloud_hunter"
+            ],
+            "description": "Assignment tier"
+        },
+        "escalation_reason": {
+            "type": "string",
+            "description": "Reason for escalation if escalated"
+        },
+        "investigation_id": {
+            "type": "string",
+            "description": "Associated investigation ID if applicable"
+        },
+        "created_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "false_positive": {
+            "type": "boolean",
+            "default": false,
+            "description": "Marked as false positive"
+        },
+        "mitre_techniques": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "pattern": "^T[0-9]{4}(\\.[0-9]{3})?$"
+            },
+            "description": "Associated MITRE ATT&CK techniques"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Custom tags for categorization"
+        }
+    },
+    "additionalProperties": true
+}

@@ -1,0 +1,342 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Investigation Schema",
+    "description": "Schema for security investigations across tiers",
+    "type": "object",
+    "required": [
+        "investigation_id",
+        "title",
+        "severity",
+        "created_at",
+        "assigned_tier"
+    ],
+    "properties": {
+        "investigation_id": {
+            "type": "string",
+            "description": "Unique investigation identifier",
+            "pattern": "^INV-[0-9]{4}-[0-9]{3,4}$"
+        },
+        "title": {
+            "type": "string",
+            "description": "Investigation title"
+        },
+        "severity": {
+            "type": "string",
+            "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low"
+            ],
+            "description": "Overall severity"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "initial_analysis",
+                "under_investigation",
+                "escalated_to_tier2",
+                "escalated_to_tier3",
+                "forensic_analysis",
+                "concluded",
+                "closed"
+            ],
+            "default": "initial_analysis",
+            "description": "Investigation status"
+        },
+        "created_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "assigned_tier": {
+            "type": "string",
+            "enum": [
+                "tier1",
+                "tier2",
+                "tier3"
+            ],
+            "description": "Current assigned tier"
+        },
+        "assigned_to": {
+            "type": "string",
+            "description": "Assigned agent/person"
+        },
+        "source_alerts": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Related alert IDs"
+        },
+        "investigation_type": {
+            "type": "string",
+            "enum": [
+                "malware_infection",
+                "lateral_movement",
+                "privilege_escalation",
+                "data_exfiltration",
+                "account_compromise",
+                "misconfiguration",
+                "policy_violation",
+                "suspicious_activity",
+                "unknown"
+            ],
+            "description": "Type of investigation"
+        },
+        "affected_assets": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "asset_type": {
+                        "type": "string"
+                    },
+                    "asset_name": {
+                        "type": "string"
+                    },
+                    "asset_id": {
+                        "type": "string"
+                    },
+                    "impact_level": {
+                        "type": "string",
+                        "enum": [
+                            "critical",
+                            "high",
+                            "medium",
+                            "low"
+                        ]
+                    }
+                }
+            },
+            "description": "Affected assets/systems"
+        },
+        "affected_users": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "user_principal_name": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "involvement_type": {
+                        "type": "string",
+                        "enum": [
+                            "victim",
+                            "attacker",
+                            "witness"
+                        ]
+                    },
+                    "impact_level": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Affected users"
+        },
+        "timeline": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "timestamp": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "event_type": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                }
+            },
+            "description": "Timeline of events"
+        },
+        "findings": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "finding_id": {
+                        "type": "string"
+                    },
+                    "finding_type": {
+                        "type": "string"
+                    },
+                    "severity": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "evidence": {
+                        "type": "array"
+                    },
+                    "found_by_agent": {
+                        "type": "string"
+                    },
+                    "found_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            },
+            "description": "Investigation findings"
+        },
+        "root_cause": {
+            "type": "object",
+            "properties": {
+                "determined": {
+                    "type": "boolean"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "contributing_factors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "mitre_techniques": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Root cause analysis"
+        },
+        "remediation_actions": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "action_id": {
+                        "type": "string"
+                    },
+                    "action_type": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "planned",
+                            "in_progress",
+                            "completed",
+                            "blocked"
+                        ]
+                    },
+                    "priority": {
+                        "type": "string",
+                        "enum": [
+                            "critical",
+                            "high",
+                            "medium",
+                            "low"
+                        ]
+                    }
+                }
+            },
+            "description": "Recommended remediation actions"
+        },
+        "business_impact": {
+            "type": "object",
+            "properties": {
+                "impact_description": {
+                    "type": "string"
+                },
+                "affected_services": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "estimated_impact_duration": {
+                    "type": "string"
+                },
+                "data_exposed": {
+                    "type": "boolean"
+                },
+                "data_exposure_details": {
+                    "type": "string"
+                }
+            },
+            "description": "Business impact assessment"
+        },
+        "escalation_history": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "escalated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "escalated_from_tier": {
+                        "type": "string"
+                    },
+                    "escalated_to_tier": {
+                        "type": "string"
+                    },
+                    "reason": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Escalation history"
+        },
+        "conclusion": {
+            "type": "object",
+            "properties": {
+                "summary": {
+                    "type": "string"
+                },
+                "verdict": {
+                    "type": "string",
+                    "enum": [
+                        "confirmed_incident",
+                        "false_positive",
+                        "resolved_incident",
+                        "ongoing"
+                    ]
+                },
+                "evidence_summary": {
+                    "type": "string"
+                }
+            },
+            "description": "Investigation conclusion"
+        },
+        "closed_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Investigation closure timestamp"
+        },
+        "lessons_learned": {
+            "type": "string",
+            "description": "Lessons learned documentation"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": true
+}

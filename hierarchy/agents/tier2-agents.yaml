@@ -1,0 +1,120 @@
+tier2_agents:
+- id: "tier2-malware-analyzer"
+  role_id: "t2-malware-analysis"
+  name: "Tier2-MalwareAnalyzer"
+  role: "Malware & File Analysis"
+  description: "Analyzes suspicious files, processes, and behaviors for malware indicators"
+  capabilities:
+  - file_analysis
+  - process_behavior_analysis
+  - sandbox_execution
+  - signature_matching
+  - behavioral_analysis
+  - detonation_analysis
+  data_sources:
+  - file_hashes
+  - process_memory_dumps
+  - network_artifacts
+  - endpoint_telemetry
+  output_format: "malware_analysis_report"
+  skills:
+  - malware_analysis
+  - reverse_engineering
+  - behavior_analysis
+  - sandbox_integration
+  - yara_rule_creation
+  integration_points:
+  - virustotal_api
+  - hybrid_analysis
+  - falcon_sandbox
+  sla_response_time: "30 minutes"
+  success_metrics:
+  - detection_accuracy: 98%
+  - analysis_completeness: 95%
+  - false_negative_rate: "< 2%"
+
+- id: "tier2-network-investigator"
+  role_id: "t2-network-investigation"
+  name: "Tier2-NetworkInvestigator"
+  role: "Network Anomaly Investigation"
+  description: "Investigates suspicious network connections, traffic patterns, and communication anomalies"
+  capabilities:
+  - network_behavior_analysis
+  - flow_correlation
+  - dns_analysis
+  - ip_reputation_lookup
+  - communication_pattern_analysis
+  - lateral_movement_detection
+  data_sources:
+  - network_flows
+  - dns_logs
+  - proxy_logs
+  - firewall_logs
+  - endpoint_network_events
+  output_format: "network_investigation_report"
+  skills:
+  - network_analysis
+  - dns_analysis
+  - threat_intelligence_correlation
+  - graph_analysis
+  - communication_profiling
+  sla_response_time: "20 minutes"
+  success_metrics:
+  - anomaly_detection_rate: 92%
+  - c2_detection_accuracy: 95%
+
+- id: "tier2-identity-analyzer"
+  role_id: "t2-identity-analysis"
+  name: "Tier2-IdentityAnalyzer"
+  role: "Identity & Authentication Analysis"
+  description: "Analyzes authentication events, identity risks, and access pattern anomalies"
+  capabilities:
+  - sign_in_analysis
+  - lateral_movement_detection
+  - privilege_escalation_detection
+  - account_compromise_detection
+  - user_behavior_baseline_analysis
+  data_sources:
+  - sign_in_logs
+  - audit_logs
+  - privileged_access_logs
+  - user_activity
+  - entra_id_logs
+  output_format: "identity_risk_report"
+  skills:
+  - identity_risk_assessment
+  - anomalous_behavior_detection
+  - privilege_escalation_analysis
+  - user_profiling
+  sla_response_time: "15 minutes"
+  success_metrics:
+  - compromise_detection_rate: 90%
+  - false_positive_rate: "< 5%"
+
+- id: "tier2-threat-assessor"
+  role_id: "t2-threat-assessment"
+  name: "Tier2-ThreatAssessor"
+  role: "Threat Severity & Impact Assessment"
+  description: "Assesses overall threat severity, business impact, and escalation requirements"
+  capabilities:
+  - severity_scoring
+  - impact_analysis
+  - risk_quantification
+  - escalation_decision
+  - incident_correlation
+  assessment_factors:
+  - asset_criticality
+  - data_sensitivity
+  - number_of_affected_systems
+  - threat_actor_capability
+  - business_context
+  output_format: "threat_assessment_report"
+  skills:
+  - risk_assessment
+  - impact_analysis
+  - business_context_analysis
+  - escalation_decision_making
+  sla_response_time: "25 minutes"
+  success_metrics:
+  - escalation_accuracy: 96%
+  - assessment_consistency: 94%

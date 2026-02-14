@@ -1,0 +1,387 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Case Schema",
+    "description": "Schema for forensic cases and legal holds",
+    "type": "object",
+    "required": [
+        "case_id",
+        "title",
+        "created_at",
+        "case_type"
+    ],
+    "properties": {
+        "case_id": {
+            "type": "string",
+            "description": "Unique case identifier",
+            "pattern": "^CASE-[0-9]{4}-[0-9]{4}$"
+        },
+        "title": {
+            "type": "string",
+            "description": "Case title"
+        },
+        "description": {
+            "type": "string",
+            "description": "Detailed case description"
+        },
+        "case_type": {
+            "type": "string",
+            "enum": [
+                "confirmed_breach",
+                "forensic_investigation",
+                "legal_hold",
+                "incident_response",
+                "compliance_investigation",
+                "litigation_support"
+            ],
+            "description": "Type of case"
+        },
+        "severity": {
+            "type": "string",
+            "enum": [
+                "critical",
+                "high",
+                "medium",
+                "low"
+            ],
+            "description": "Case severity"
+        },
+        "status": {
+            "type": "string",
+            "enum": [
+                "open",
+                "under_investigation",
+                "escalated",
+                "on_hold",
+                "concluded",
+                "archived"
+            ],
+            "default": "open",
+            "description": "Case status"
+        },
+        "created_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "updated_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "assigned_tier3_analyst": {
+            "type": "string",
+            "description": "Assigned forensic analyst"
+        },
+        "investigation_id": {
+            "type": "string",
+            "description": "Related investigation ID"
+        },
+        "evidence_collection": {
+            "type": "object",
+            "properties": {
+                "collection_status": {
+                    "type": "string",
+                    "enum": [
+                        "not_started",
+                        "in_progress",
+                        "completed"
+                    ]
+                },
+                "evidence_items": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "item_id": {
+                                "type": "string"
+                            },
+                            "item_type": {
+                                "type": "string",
+                                "enum": [
+                                    "memory_dump",
+                                    "disk_image",
+                                    "file",
+                                    "log",
+                                    "artifact",
+                                    "screenshot"
+                                ]
+                            },
+                            "item_description": {
+                                "type": "string"
+                            },
+                            "source_device": {
+                                "type": "string"
+                            },
+                            "collection_date": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "hash_md5": {
+                                "type": "string",
+                                "pattern": "^[a-f0-9]{32}$"
+                            },
+                            "hash_sha1": {
+                                "type": "string",
+                                "pattern": "^[a-f0-9]{40}$"
+                            },
+                            "hash_sha256": {
+                                "type": "string",
+                                "pattern": "^[a-f0-9]{64}$"
+                            },
+                            "size_bytes": {
+                                "type": "integer"
+                            },
+                            "storage_location": {
+                                "type": "string"
+                            },
+                            "access_log": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "Evidence collection information"
+        },
+        "chain_of_custody": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "event_date": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "collected",
+                            "transferred",
+                            "analyzed",
+                            "stored",
+                            "accessed"
+                        ]
+                    },
+                    "handled_by": {
+                        "type": "string"
+                    },
+                    "from_location": {
+                        "type": "string"
+                    },
+                    "to_location": {
+                        "type": "string"
+                    },
+                    "notes": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Chain of custody log"
+        },
+        "forensic_findings": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "finding_id": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string",
+                        "enum": [
+                            "malware_presence",
+                            "unauthorized_access",
+                            "data_modification",
+                            "data_exfiltration",
+                            "persistence_mechanism",
+                            "lateral_movement_evidence",
+                            "privilege_escalation_evidence"
+                        ]
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "evidence_items": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "significance": {
+                        "type": "string",
+                        "enum": [
+                            "critical",
+                            "high",
+                            "medium",
+                            "low"
+                        ]
+                    },
+                    "confidence": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                }
+            },
+            "description": "Forensic analysis findings"
+        },
+        "timeline_reconstruction": {
+            "type": "object",
+            "properties": {
+                "reconstruction_status": {
+                    "type": "string",
+                    "enum": [
+                        "not_started",
+                        "in_progress",
+                        "completed"
+                    ]
+                },
+                "timeline_events": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "event_timestamp": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "event_description": {
+                                "type": "string"
+                            },
+                            "event_source": {
+                                "type": "string"
+                            },
+                            "confidence_level": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 100
+                            }
+                        }
+                    }
+                }
+            },
+            "description": "Incident timeline reconstruction"
+        },
+        "root_cause_analysis": {
+            "type": "object",
+            "properties": {
+                "analysis_complete": {
+                    "type": "boolean"
+                },
+                "root_cause": {
+                    "type": "string"
+                },
+                "contributing_factors": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "attack_techniques": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "technique_id": {
+                                "type": "string"
+                            },
+                            "technique_name": {
+                                "type": "string"
+                            },
+                            "framework": {
+                                "type": "string",
+                                "enum": [
+                                    "mitre_attack",
+                                    "kill_chain"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "initial_access_vector": {
+                    "type": "string"
+                }
+            },
+            "description": "Root cause analysis"
+        },
+        "legal_considerations": {
+            "type": "object",
+            "properties": {
+                "legal_hold_in_effect": {
+                    "type": "boolean"
+                },
+                "legal_hold_request_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "legal_hold_requester": {
+                    "type": "string"
+                },
+                "legal_hold_scope": {
+                    "type": "string"
+                },
+                "litigation_risk": {
+                    "type": "string",
+                    "enum": [
+                        "high",
+                        "medium",
+                        "low"
+                    ]
+                },
+                "regulatory_implications": {
+                    "type": "string"
+                },
+                "notification_required": {
+                    "type": "boolean"
+                },
+                "notification_timeline": {
+                    "type": "string"
+                }
+            },
+            "description": "Legal considerations and holds"
+        },
+        "report": {
+            "type": "object",
+            "properties": {
+                "executive_summary": {
+                    "type": "string"
+                },
+                "detailed_findings": {
+                    "type": "string"
+                },
+                "recommendations": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "report_date": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "report_version": {
+                    "type": "string"
+                },
+                "authorized_by": {
+                    "type": "string"
+                }
+            },
+            "description": "Forensic report"
+        },
+        "closed_at": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "closure_reason": {
+            "type": "string"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "additionalProperties": true
+}

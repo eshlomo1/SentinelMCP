@@ -1,0 +1,144 @@
+cloud_hunter_agents:
+- id: "cloud-hunter-infrastructure-analyzer"
+  role_id: "ch-infrastructure-security"
+  name: "CloudHunter-InfrastructureAnalyzer"
+  role: "Cloud Infrastructure Analysis"
+  description: "Analyzes cloud infrastructure for misconfigurations, security gaps, and compliance violations"
+  capabilities:
+  - cloud_config_assessment
+  - iam_policy_analysis
+  - storage_security_review
+  - network_segmentation_analysis
+  - encryption_verification
+  - compliance_checking
+  supported_clouds:
+  - aws
+  - azure
+  - gcp
+  data_sources:
+  - cloud_api_queries
+  - config_management_data
+  - iam_policies
+  - network_policies
+  - storage_configurations
+  tools_and_integrations:
+  - aws_config
+  - azure_policy
+  - gcp_security_command_center
+  - prowler
+  - scout_suite
+  output_format: "infrastructure_assessment_report"
+  skills:
+  - cloud_security_assessment
+  - iam_analysis
+  - configuration_review
+  - compliance_mapping
+  - risk_scoring
+  sla_response_time: "2 hours"
+  success_metrics:
+  - misconfiguration_detection_rate: 95%
+  - false_positive_rate: "< 10%"
+  - assessment_coverage: 98%
+
+- id: "cloud-hunter-log-anomaly-detector"
+  role_id: "ch-log-analysis"
+  name: "CloudHunter-LogAnomalyDetector"
+  role: "Cloud Log Anomaly Detection"
+  description: "Detects anomalous patterns and suspicious activities in cloud audit and application logs"
+  capabilities:
+  - log_anomaly_detection
+  - behavioral_baseline_learning
+  - privilege_elevation_detection
+  - data_exfiltration_detection
+  - unauthorized_access_detection
+  - suspicious_api_pattern_detection
+  data_sources:
+  - cloudtrail_logs
+  - azure_activity_logs
+  - gcp_audit_logs
+  - application_logs
+  - access_logs
+  tools_and_integrations:
+  - aws_athena
+  - azure_log_analytics
+  - gcp_bigquery
+  - splunk
+  - elastic_security
+  output_format: "anomaly_detection_report"
+  skills:
+  - log_analysis
+  - anomaly_detection
+  - machine_learning_inference
+  - behavioral_analysis
+  - pattern_recognition
+  sla_response_time: "30 minutes"
+  success_metrics:
+  - anomaly_detection_rate: 90%
+  - false_positive_rate: "< 8%"
+  - detection_latency: "< 5 minutes"
+
+- id: "cloud-hunter-threat-intel-enricher"
+  role_id: "ch-threat-intelligence"
+  name: "CloudHunter-ThreatIntelligenceEnricher"
+  role: "Threat Intelligence Integration"
+  description: "Integrates threat intelligence with cloud telemetry to identify known threats and indicators"
+  capabilities:
+  - threat_intel_correlation
+  - ioc_lookup
+  - threat_actor_intelligence
+  - vulnerability_correlation
+  - campaign_tracking
+  - threat_intel_feed_management
+  data_sources:
+  - threat_intel_feeds
+  - cloud_telemetry
+  - security_alerts
+  - external_threat_databases
+  tools_and_integrations:
+  - misp
+  - anomali_threatstream
+  - threat_intel_sharing_platform
+  - abuse_ipdb
+  - alienvault_otx
+  output_format: "threat_intel_enrichment_report"
+  skills:
+  - threat_intelligence_analysis
+  - ioc_correlation
+  - threat_actor_profiling
+  - intelligence_synthesis
+  continuous_operation: true
+  sla_response_time: "1 hour"
+  success_metrics:
+  - threat_correlation_rate: 88%
+  - intelligence_actionability: 85%
+
+- id: "cloud-hunter-proactive-hunter"
+  role_id: "ch-proactive-hunting"
+  name: "CloudHunter-ProactiveHunter"
+  role: "Proactive Threat Hunting"
+  description: "Proactively searches for indicators of compromise and advanced threats in cloud environments"
+  capabilities:
+  - hypothesis_generation
+  - query_development
+  - pattern_hunting
+  - lateral_movement_detection
+  - data_exfiltration_hunting
+  - persistence_mechanism_hunting
+  - privilege_escalation_hunting
+  hunting_frameworks:
+  - mitre_attack
+  - kill_chain_analysis
+  - attck_cloud
+  output_format: "hunting_findings_report"
+  skills:
+  - threat_hunting
+  - hypothesis_generation
+  - query_optimization
+  - attack_technique_knowledge
+  - creative_analysis
+  continuous_operation: true
+  sla_response_time: "4 hours"
+  success_metrics:
+  - findings_relevance_rate: 92%
+  - true_positive_hunting_rate: 85%
+  - hunting_coverage_breadth: 90%

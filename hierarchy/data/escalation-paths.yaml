@@ -1,0 +1,299 @@
+escalation_paths:
+  alert_routing_matrix:
+    header: "Alert routing based on severity and type"
+    
+    critical_severity:
+      routing:
+        - destination: "tier2_immediate"
+          escalation: true
+          time_to_escalate: "0-15 minutes"
+          notification: "email + slack + phone"
+        - destination: "tier3_standby"
+          escalation: true
+          time_to_escalate: "4-8 hours if not resolved"
+        - destination: "soc_leadership"
+          notification: true
+          time_to_notify: "15 minutes"
+      handling_rules:
+        - "Create incident ticket immediately"
+        - "Assign to senior investigator"
+        - "Begin preliminary containment assessment"
+        - "Document all findings"
+
+    high_severity:
+      routing:
+        - destination: "tier2_queue"
+          escalation: true
+          time_to_escalate: "1-4 hours"
+          notification: "email + slack"
+        - destination: "tier3_queue"
+          escalation: true
+          condition: "if not resolved by tier2 within 8 hours"
+        - destination: "soc_management"
+          notification: true
+          time_to_notify: "1 hour"
+      handling_rules:
+        - "Create investigation ticket"
+        - "Assign to qualified investigator"
+        - "Gather supporting evidence"
+        - "Prepare escalation summary"
+
+    medium_severity:
+      routing:
+        - destination: "tier1_investigation"
+          escalation: false
+          time_limit: "4 hours"
+        - destination: "tier2_queue"
+          escalation: true
+          condition: "if escalation triggered by tier1"
+          time_to_escalate: "2-4 hours after escalation trigger"
+        - destination: "team_lead"
+          notification: true
+          time_to_notify: "2 hours"
+      handling_rules:
+        - "Log in investigation queue"
+        - "Conduct preliminary assessment"
+        - "Determine if escalation needed"
+
+    low_severity:
+      routing:
+        - destination: "batch_review_queue"
+          escalation: false
+          batch_process_frequency: "daily"
+        - destination: "tier2_queue"
+          escalation: true
+          condition: "if pattern correlation detected"
+      handling_rules:
+        - "Queue for batch processing"
+        - "Suppress if confirmed false positive"
+        - "Log for trend analysis"
+
+  investigation_escalation_matrix:
+    header: "Investigation escalation based on findings"
+
+    unconfirmed_threat:
+      escalation: false
+      action: "Continue monitoring"
+      resolution: "Close with findings"
+      documentation: "Investigation summary"
+
+    suspicious_activity:
+      escalation_to: "tier2"
+      requirement: "Moderate confidence of compromise"
+      action: "Escalate for deeper investigation"
+      time_to_escalate: "Within 4 hours"
+      escalation_criteria:
+        - "Multiple corroborating indicators"
+        - "Anomalous network traffic detected"
+        - "Policy violations identified"
+      notification_recipients: ["tier2_lead", "soc_manager"]
+
+    confirmed_incident:
+      escalation_to: "tier3"
+      requirement: "High confidence of compromise"
+      trigger_criteria:
+        - "Evidence of data access"
+        - "Lateral movement detected"
+        - "Privilege escalation confirmed"
+        - "Persistence mechanism found"
+      immediate_actions:
+        - "Create forensic case"
+        - "Preserve evidence"
+        - "Initiate containment"
+      time_to_escalate: "Within 2 hours"
+      escalation_checklist:
+        - "Investigation files prepared"
+        - "All artifacts collected"
+        - "Timeline constructed"
+        - "Preliminary findings documented"
+      notification_recipients:
+        - "tier3_lead"
+        - "incident_commander"
+        - "ciso"
+        - "legal_counsel"
+
+    active_breach:
+      escalation_to: ["tier3", "incident_response_team"]
+      requirement: "Critical evidence of active compromise"
+      immediate_actions:
+        - "Incident declared"
+        - "Crisis response team activated"
+        - "Communications initiated"
+        - "Evidence preservation started"
+        - "Containment measures implemented"
+      time_to_escalate: "Immediate (0-15 minutes)"
+      escalation_checklist:
+        - "Incident command established"
+        - "All stakeholders notified"
+        - "Evidence collection initiated"
+        - "Containment plan activated"
+        - "Communication strategy defined"
+      notification_recipients:
+        - "executive_leadership"
+        - "ciso"
+        - "general_counsel"
+        - "incident_response_commander"
+        - "external_counsel"
+        - "law_enforcement" (if applicable)
+
+  forensic_escalation_matrix:
+    header: "Forensic analysis escalation and case management"
+
+    forensic_case_creation:
+      trigger: "tier3 forensic analysis required"
+      prerequisites:
+        - "Investigation shows confirmed incident"
+        - "Tier 2 cannot fully resolve incident"
+        - "Forensic artifacts identified"
+      case_creation_time: "Within 2 hours of escalation"
+      initial_actions:
+        - "Create forensic case record"
+        - "Assign evidence custodian"
+        - "Establish chain of custody"
+        - "Plan evidence collection"
+      notification: "ciso, legal, forensic_lead"
+
+    legal_implications:
+      trigger: "Data breach or regulatory incident detected"
+      escalation_to: "Legal & Compliance"
+      time_to_escalate: "Within 4 hours"
+      requirements:
+        - "Incident severity assessment"
+        - "Potential data exposure determination"
+        - "Regulatory jurisdiction identification"
+        - "Notification timeline calculation"
+      actions:
+        - "Initiate legal hold"
+        - "Preserve all related evidence"
+        - "Document chain of custody"
+        - "Record all investigation steps"
+      notification_recipients:
+        - "general_counsel"
+        - "compliance_officer"
+        - "external_counsel"
+        - "ciso"
+
+    criminal_activity:
+      trigger: "Evidence of criminal activity detected"
+      escalation_to: ["Law Enforcement", "External Counsel"]
+      time_to_escalate: "Within 24 hours"
+      requirements:
+        - "Confirmed evidence of crime"
+        - "Preservation of evidence integrity"
+        - "Chain of custody maintenance"
+      actions:
+        - "Coordinate with law enforcement"
+        - "Engage external counsel"
+        - "Preserve all evidence"
+        - "Cease investigation if advised"
+      notification_recipients:
+        - "law_enforcement"
+        - "external_forensic_counsel"
+        - "ciso"
+        - "general_counsel"
+        - "executive_leadership"
+
+  cloud_hunter_escalation:
+    header: "Cloud threat hunting findings escalation"
+
+    infrastructure_misconfiguration:
+      severity_level: "medium"
+      escalation: false
+      action: "Remediation recommendation"
+      tracking: "Issue management system"
+      remediation_sla: "30 days"
+
+    security_vulnerability:
+      severity_level: "high"
+      escalation_to: "tier2"
+      time_to_escalate: "Within 2 hours"
+      action: "Create investigation for exposure risk"
+      remediation_sla: "14 days"
+
+    active_threat_indicator:
+      severity_level: "critical"
+      escalation_to: ["tier2", "incident_response"]
+      time_to_escalate: "Immediate (0-30 minutes)"
+      action: "Immediate investigation and containment"
+      remediation_sla: "Real-time response required"
+
+escalation_notification_templates:
+  template_tier1_to_tier2:
+    subject: "ESCALATION: Alert requires Tier 2 investigation"
+    channels:
+      primary: "email"
+      secondary: ["slack", "teams"]
+    content_includes:
+      - "Alert ID"
+      - "Severity"
+      - "Summary"
+      - "Affected Assets"
+      - "Key Evidence"
+      - "Routing Reason"
+    recipients: "tier2_on_call_queue"
+    sla_acknowledgment: "1 hour"
+
+  template_tier2_to_tier3:
+    subject: "ESCALATION: Confirmed incident requires forensic analysis"
+    channels:
+      primary: "email"
+      secondary: ["slack", "teams", "phone"]
+    content_includes:
+      - "Investigation ID"
+      - "Severity"
+      - "Incident Summary"
+      - "Confirmed Indicators"
+      - "Affected Systems"
+      - "Forensic Plan"
+      - "Evidence Artifacts"
+    recipients: "tier3_on_call_queue, incident_commander"
+    sla_acknowledgment: "2 hours"
+
+  template_active_breach:
+    subject: "CRITICAL: Active breach - Incident response activated"
+    channels:
+      priority: ["phone", "email", "sms"]
+      secondary: ["slack", "teams"]
+    content_includes:
+      - "INCIDENT DECLARED"
+      - "Severity: Critical"
+      - "Brief Summary"
+      - "Immediate Actions Required"
+      - "Escalation Contacts"
+      - "Command Center Location/Details"
+      - "Conference Bridge"
+    recipients:
+      primary: "executive_leadership, ciso, incident_commander"
+      secondary: "tier3, legal, communications"
+    sla_acknowledgment: "15 minutes"
+
+handoff_procedures:
+  tier1_to_tier2:
+    - "Prepare investigation package"
+    - "Document all findings"
+    - "Create investigation ticket"
+    - "Identify key evidence"
+    - "Prepare briefing"
+    - "Schedule handoff meeting (if critical)"
+    - "Assign tier2 investigator"
+    - "Update ticketing system"
+
+  tier2_to_tier3:
+    - "Consolidate findings"
+    - "Prepare forensic plan"
+    - "Identify evidence items to collect"
+    - "Document investigation timeline"
+    - "Create case record"
+    - "Assign evidence custodian"
+    - "Schedule evidence collection"
+    - "Conduct handoff meeting"
+    - "Establish forensic case folder"
+
+  tier3_to_legal:
+    - "Prepare forensic report draft"
+    - "Summarize legal implications"
+    - "Document evidence chain of custody"
+    - "Identify potential legal holds"
+    - "Schedule legal review meeting"
+    - "Provide executive summary"
+    - "Establish communication procedures"

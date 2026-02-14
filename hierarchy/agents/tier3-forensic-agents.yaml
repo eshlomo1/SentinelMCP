@@ -1,0 +1,127 @@
+tier3_forensic_agents:
+- id: "tier3-forensic-investigator"
+  role_id: "t3-forensic-investigation"
+  name: "Tier3-ForensicInvestigator"
+  role: "Deep Forensic Analysis"
+  description: "Conducts deep forensic analysis of compromised systems, volatile memory, and disk artifacts"
+  capabilities:
+  - volatile_memory_analysis
+  - disk_forensics
+  - file_system_analysis
+  - registry_analysis
+  - artifact_preservation
+  - chain_of_custody
+  data_sources:
+  - memory_dumps
+  - disk_images
+  - file_system_artifacts
+  - registry_hives
+  - event_logs
+  tools_and_integrations:
+  - volatility
+  - autopsy
+  - winregistry_parser
+  - sleuthkit
+  output_format: "forensic_analysis_report"
+  skills:
+  - forensic_analysis
+  - windows_internals
+  - memory_forensics
+  - disk_forensics
+  - artifact_analysis
+  sla_response_time: "4 hours"
+  success_metrics:
+  - artifact_recovery_rate: 98%
+  - analysis_completeness: 99%
+  - evidence_integrity: 100%
+
+- id: "tier3-incident-reconstructor"
+  role_id: "t3-incident-reconstruction"
+  name: "Tier3-IncidentReconstructor"
+  role: "Incident Timeline Reconstruction"
+  description: "Reconstructs complete incident timeline from multiple data sources to establish sequence of events"
+  capabilities:
+  - timeline_reconstruction
+  - event_correlation
+  - timestamp_normalization
+  - causality_analysis
+  - attack_path_mapping
+  data_sources:
+  - system_event_logs
+  - application_logs
+  - network_logs
+  - forensic_artifacts
+  - timeline_data
+  tools_and_integrations:
+  - log2timeline
+  - mactime
+  - plaso
+  - timeline_template_library
+  output_format: "incident_timeline_report"
+  skills:
+  - timeline_analysis
+  - event_correlation
+  - attack_sequencing
+  - causality_determination
+  sla_response_time: "6 hours"
+  success_metrics:
+  - timeline_accuracy: 99%
+  - event_linkage_completeness: 98%
+
+- id: "tier3-evidence-collector"
+  role_id: "t3-evidence-collection"
+  name: "Tier3-EvidenceCollector"
+  role: "Evidence Collection & Preservation"
+  description: "Collects, preserves, and maintains chain of custody for all forensic evidence"
+  capabilities:
+  - evidence_collection
+  - chain_of_custody_maintenance
+  - evidence_storage
+  - hash_verification
+  - duplication_verification
+  - legal_compliance
+  compliance_frameworks:
+  - federal_rules_of_evidence
+  - edrm_standards
+  - iso_27037
+  output_format: "evidence_collection_report"
+  skills:
+  - evidence_preservation
+  - chain_of_custody_management
+  - legal_compliance
+  - hash_computation
+  - duplication_verification
+  integration_points:
+  - evidence_management_system
+  - legal_hold_system
+  sla_response_time: "2 hours"
+  success_metrics:
+  - evidence_integrity: 100%
+  - chain_of_custody_compliance: 100%
+
+- id: "tier3-root-cause-analyzer"
+  role_id: "t3-root-cause-analysis"
+  name: "Tier3-RootCauseAnalyzer"
+  role: "Root Cause Analysis & Determination"
+  description: "Determines root cause of incident, identifies vulnerabilities, and recommends remediation"
+  capabilities:
+  - root_cause_determination
+  - vulnerability_identification
+  - attack_technique_classification
+  - remediation_recommendations
+  - lesson_learned_extraction
+  frameworks:
+  - mitre_attack
+  - cis_controls
+  - nist_framework
+  output_format: "root_cause_analysis_report"
+  skills:
+  - root_cause_analysis
+  - vulnerability_assessment
+  - attack_technique_classification
+  - remediation_planning
+  - lessons_learned_documentation
+  sla_response_time: "8 hours"
+  success_metrics:
+  - root_cause_accuracy: 97%
+  - remediation_effectiveness: 95%

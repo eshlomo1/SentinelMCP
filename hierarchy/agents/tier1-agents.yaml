@@ -1,0 +1,108 @@
+tier1_agents:
+- id: "tier1-alert-parser"
+  role_id: "t1-alert-normalization"
+  name: "Tier1-AlertParser"
+  role: "Alert Normalization & Parsing"
+  description: "Parses and normalizes alerts from multiple sources into unified format"
+  capabilities:
+  - alert_parsing
+  - format_normalization
+  - field_mapping
+  - schema_validation
+  input_sources:
+  - defender_xdr_alerts
+  - azure_security_alerts
+  - third_party_siem
+  output_format: "normalized_alert"
+  skills:
+  - alert_parsing
+  - data_normalization
+  - regex_pattern_matching
+  sla_response_time: "5 minutes"
+  success_metrics:
+  - parsing_accuracy: 99.5%
+  - processing_latency: "< 30 seconds"
+
+- id: "tier1-alert-enricher"
+  role_id: "t1-alert-enrichment"
+  name: "Tier1-AlertEnricher"
+  role: "Alert Context Enrichment"
+  description: "Enriches alerts with historical data, threat intelligence, and contextual information"
+  capabilities:
+  - threat_intelligence_lookup
+  - historical_analysis
+  - asset_context_lookup
+  - user_risk_assessment
+  data_sources:
+  - threat_intel_feeds
+  - asset_database
+  - user_directory
+  - historical_alerts
+  output_format: "enriched_alert"
+  skills:
+  - threat_intelligence_integration
+  - context_enrichment
+  - asset_lookup
+  - user_profiling
+  sla_response_time: "2 minutes"
+  success_metrics:
+  - enrichment_coverage: 95%
+  - false_positive_reduction: 30%
+
+- id: "tier1-alert-router"
+  role_id: "t1-alert-routing"
+  name: "Tier1-AlertRouter"
+  role: "Alert Routing & Triage"
+  description: "Routes alerts to appropriate teams, tiers, and workflows based on severity and type"
+  capabilities:
+  - alert_classification
+  - severity_assessment
+  - team_routing
+  - escalation_decision
+  - workflow_assignment
+  routing_rules:
+  - condition: "severity == critical"
+    destination: "tier2_tier3"
+    escalation: true
+  - condition: "severity == high AND evidence_of_compromise == true"
+    destination: "tier2"
+    escalation: true
+  - condition: "severity == medium"
+    destination: "tier1_investigation"
+    escalation: false
+  - condition: "severity == low"
+    destination: "queue_for_batch_review"
+    escalation: false
+  skills:
+  - alert_classification
+  - routing_logic
+  - severity_assessment
+  sla_response_time: "1 minute"
+  success_metrics:
+  - routing_accuracy: 98%
+  - escalation_appropriateness: 95%
+
+- id: "tier1-fp-eliminator"
+  role_id: "t1-fp-detection"
+  name: "Tier1-FalsePositiveEliminator"
+  role: "False Positive Detection & Elimination"
+  description: "Identifies and filters known false positives, reducing alert fatigue"
+  capabilities:
+  - false_positive_pattern_recognition
+  - benign_activity_detection
+  - alert_suppression
+  - pattern_learning
+  detection_patterns:
+  - legitimate_admin_activity
+  - scheduled_maintenance
+  - known_software_behaviors
+  - internal_scanning_tools
+  output_format: "filtered_alert_queue"
+  skills:
+  - anomaly_detection
+  - pattern_recognition
+  - machine_learning_inference
+  sla_response_time: "30 seconds"
+  success_metrics:
+  - false_positive_detection_rate: 40%
+  - true_positive_preservation: 99%

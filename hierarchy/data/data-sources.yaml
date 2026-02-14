@@ -1,0 +1,213 @@
+data_sources:
+  external_sources:
+  - source_id: "defender_xdr"
+    name: "Microsoft Defender XDR"
+    type: "SIEM"
+    data_types:
+    - alerts
+    - incidents
+    - detections
+    - threat_intelligence
+    api_endpoint: "https://api.security.microsoft.com"
+    refresh_frequency: "real-time"
+    tier_consumers: [ "tier1", "tier2", "cloud_hunter" ]
+
+  - source_id: "entra_id"
+    name: "Microsoft Entra ID"
+    type: "Identity Provider"
+    data_types:
+    - sign_in_logs
+    - audit_logs
+    - risk_detections
+    - conditional_access
+    api_endpoint: "https://graph.microsoft.com"
+    refresh_frequency: "real-time"
+    tier_consumers: [ "tier1", "tier2" ]
+
+  - source_id: "azure_security"
+    name: "Azure Security Center"
+    type: "Cloud Security"
+    data_types:
+    - recommendations
+    - alerts
+    - secure_score
+    - compliance_assessments
+    api_endpoint: "https://management.azure.com"
+    refresh_frequency: "hourly"
+    tier_consumers: [ "tier1", "tier2", "cloud_hunter" ]
+
+  - source_id: "cloud_app_security"
+    name: "Microsoft Defender for Cloud Apps"
+    type: "Cloud Access Control"
+    data_types:
+    - user_activity
+    - data_protection
+    - app_governance
+    - anomaly_detection
+    api_endpoint: "https://api.portal.cloudappsecurity.com"
+    refresh_frequency: "real-time"
+    tier_consumers: [ "tier1", "tier2", "cloud_hunter" ]
+
+  - source_id: "aws_cloudtrail"
+    name: "AWS CloudTrail"
+    type: "Cloud Audit"
+    data_types:
+    - api_calls
+    - user_activity
+    - resource_changes
+    refresh_frequency: "5 minutes"
+    tier_consumers: [ "cloud_hunter", "tier2" ]
+
+  - source_id: "gcp_audit"
+    name: "GCP Cloud Audit Logs"
+    type: "Cloud Audit"
+    data_types:
+    - admin_activity
+    - data_access
+    - system_events
+    refresh_frequency: "5 minutes"
+    tier_consumers: [ "cloud_hunter", "tier2" ]
+
+  - source_id: "threat_intel_feeds"
+    name: "Threat Intelligence Feeds"
+    type: "External Intelligence"
+    data_types:
+    - iocs
+    - malware_signatures
+    - campaign_data
+    - threat_actor_intelligence
+    providers:
+    - "MISP"
+    - "Anomali ThreatStream"
+    - "Abuse.ch"
+    - "AlienVault OTX"
+    refresh_frequency: "hourly"
+    tier_consumers: [ "tier1", "tier2", "cloud_hunter" ]
+
+  internal_data_stores:
+  - store_id: "alert_database"
+    name: "Alert Database"
+    description: "Unified alert repository"
+    schema: "alert-schema.json"
+    tier_consumers: [ "all" ]
+    retention_days: 90
+
+  - store_id: "investigation_database"
+    name: "Investigation Database"
+    description: "Investigation and case records"
+    schema: [ "investigation-schema.json", "case-schema.json" ]
+    tier_consumers: [ "all" ]
+    retention_days: 2555 # 7 years
+
+  - store_id: "evidence_store"
+    name: "Evidence Storage"
+    description: "Forensic evidence and artifacts"
+    tier_consumers: [ "tier3" ]
+    retention_days: 2555 # 7 years
+    location: "Secure evidence vault with access controls"
+
+  - store_id: "threat_intel_cache"
+    name: "Threat Intelligence Cache"
+    description: "Cached threat intelligence"
+    refresh_frequency: "hourly"
+    tier_consumers: [ "all" ]
+    retention_days: 365
+
+  - store_id: "baseline_profiles"
+    name: "Behavioral Baselines"
+    description: "User and entity behavioral baselines"
+    tier_consumers: [ "tier1", "tier2", "cloud_hunter" ]
+    retention_days: 365
+
+data_flow_patterns:
+  pattern_1:
+    name: "Alert Ingestion & Triage"
+    description: "Incoming alerts from external sources to Tier 1"
+    flow:
+    - "External Source (Defender XDR, Azure Security, etc.)"
+    - "Alert Normalization (Tier1-AlertParser)"
+    - "Alert Enrichment (Tier1-AlertEnricher)"
+    - "False Positive Detection (Tier1-FalsePositiveEliminator)"
+    - "Alert Routing (Tier1-AlertRouter)"
+    - "Alert Database"
+    participants:
+    - "tier1-alert-parser"
+    - "tier1-alert-enricher"
+    - "tier1-fp-eliminator"
+    - "tier1-alert-router"
+    output: "enriched_alert"
+    typical_latency: "5-15 minutes"
+
+  pattern_2:
+    name: "Tier 1 to Tier 2 Escalation"
+    description: "Escalation of high-severity or complex alerts to Tier 2"
+    flow:
+    - "Alert Queue (from Tier 1)"
+    - "Tier2-MalwareAnalyzer (if malware suspected)"
+    - "Tier2-NetworkInvestigator (if network anomaly)"
+    - "Tier2-IdentityAnalyzer (if identity risk)"
+    - "Tier2-ThreatAssessor"
+    - "Investigation Database"
+    participants:
+    - "tier2-malware-analyzer"
+    - "tier2-network-investigator"
+    - "tier2-identity-analyzer"
+    - "tier2-threat-assessor"
+    output: "investigation_report"
+    typical_latency: "4-24 hours"
+
+  pattern_3:
+    name: "Tier 2 to Tier 3 Forensic Escalation"
+    description: "Deep forensic investigation for confirmed incidents"
+    flow:
+    - "Investigation (from Tier 2)"
+    - "Evidence Collection (Tier3-EvidenceCollector)"
+    - "Forensic Investigation (Tier3-ForensicInvestigator)"
+    - "Incident Reconstruction (Tier3-IncidentReconstructor)"
+    - "Root Cause Analysis (Tier3-RootCauseAnalyzer)"
+    - "Case Database"
+    - "Evidence Store"
+    participants:
+    - "tier3-forensic-investigator"
+    - "tier3-incident-reconstructor"
+    - "tier3-evidence-collector"
+    - "tier3-root-cause-analyzer"
+    output: "forensic_report, case_documentation"
+    typical_latency: "24-72 hours"
+
+  pattern_4:
+    name: "Cloud Threat Hunting"
+    description: "Proactive cloud infrastructure and log analysis"
+    flow:
+    - "Cloud Data Sources (AWS, Azure, GCP)"
+    - "Log Anomaly Detection (CloudHunter-LogAnomalyDetector)"
+    - "Infrastructure Analysis (CloudHunter-InfrastructureAnalyzer)"
+    - "Threat Intelligence Enrichment (CloudHunter-ThreatIntelligenceEnricher)"
+    - "Proactive Hunting (CloudHunter-ProactiveHunter)"
+    - "Findings Queue"
+    - "Tier 2 Investigation Queue (if findings escalated)"
+    participants:
+    - "cloud-hunter-infrastructure-analyzer"
+    - "cloud-hunter-log-anomaly-detector"
+    - "cloud-hunter-threat-intel-enricher"
+    - "cloud-hunter-proactive-hunter"
+    output: "hunting_findings, escalated_alerts"
+    typical_latency: "2-8 hours for findings"
+
+  pattern_5:
+    name: "Parallel Investigation"
+    description: "Multiple Tier 2 agents investigating same alert in parallel"
+    flow:
+    - "Alert (high-confidence malware)"
+    - "Tier2-MalwareAnalyzer (parallel)"
+    - "Tier2-NetworkInvestigator (parallel)"
+    - "Tier2-IdentityAnalyzer (parallel)"
+    - "Tier2-ThreatAssessor (consolidation)"
+    - "Investigation Report"
+    participants:
+    - "tier2-malware-analyzer"
+    - "tier2-network-investigator"
+    - "tier2-identity-analyzer"
+    - "tier2-threat-assessor"
+    output: "comprehensive_investigation_report"
+    typical_latency: "8-20 hours"

@@ -1,0 +1,133 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Agent Schema",
+    "description": "Schema for Sentinel MCP agents",
+    "type": "object",
+    "required": [
+        "id",
+        "name",
+        "tier",
+        "role",
+        "capabilities",
+        "data_sources",
+        "skills",
+        "sla_response_time"
+    ],
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Unique agent identifier",
+            "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+            "type": "string",
+            "description": "Agent display name"
+        },
+        "tier": {
+            "type": "string",
+            "enum": [
+                "tier1",
+                "tier2",
+                "tier3",
+                "cloud_hunter"
+            ],
+            "description": "Agent operational tier"
+        },
+        "role": {
+            "type": "string",
+            "description": "Primary role and responsibility"
+        },
+        "description": {
+            "type": "string",
+            "description": "Detailed description of agent purpose"
+        },
+        "capabilities": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "List of agent capabilities"
+        },
+        "data_sources": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Data sources the agent consumes"
+        },
+        "output_format": {
+            "type": "string",
+            "description": "Format of agent output"
+        },
+        "skills": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Required skills for agent operation"
+        },
+        "sla_response_time": {
+            "type": "string",
+            "description": "SLA response time target",
+            "pattern": "^[0-9]+ (minutes|hours|days)$"
+        },
+        "success_metrics": {
+            "type": "object",
+            "description": "Key success metrics for agent",
+            "additionalProperties": true
+        },
+        "integration_points": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "External systems integration points"
+        },
+        "escalation_rules": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "condition": {
+                        "type": "string"
+                    },
+                    "target_tier": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Rules for escalating findings"
+        },
+        "routing_rules": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "condition": {
+                        "type": "string"
+                    },
+                    "destination": {
+                        "type": "string"
+                    },
+                    "escalation": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "description": "Rules for routing alerts/cases"
+        },
+        "tools_and_integrations": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "description": "Tools and systems the agent uses"
+        },
+        "continuous_operation": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether agent runs continuously"
+        }
+    },
+    "additionalProperties": true
+}

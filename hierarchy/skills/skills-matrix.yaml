@@ -1,0 +1,242 @@
+skills_matrix:
+  core_skills:
+    alert_parsing:
+      level: 1
+      description: "Parse and normalize alert formats"
+      agents: [ "tier1-alert-parser" ]
+      difficulty: "beginner"
+
+    data_normalization:
+      level: 1
+      description: "Normalize disparate data formats"
+      agents: [ "tier1-alert-parser" ]
+      difficulty: "beginner"
+
+    threat_intelligence_integration:
+      level: 2
+      description: "Integrate external threat intelligence feeds"
+      agents: [ "tier1-alert-enricher", "cloud-hunter-threat-intel-enricher", "tier2-threat-assessor" ]
+      difficulty: "intermediate"
+
+    alert_classification:
+      level: 2
+      description: "Classify alerts by type, severity, and impact"
+      agents: [ "tier1-alert-router", "tier2-threat-assessor" ]
+      difficulty: "intermediate"
+
+    pattern_recognition:
+      level: 2
+      description: "Identify patterns in security data"
+      agents: [ "tier1-fp-eliminator", "cloud-hunter-log-anomaly-detector" ]
+      difficulty: "intermediate"
+
+  investigation_skills:
+    malware_analysis:
+      level: 3
+      description: "Analyze malware characteristics, behaviors, and family"
+      agents: [ "tier2-malware-analyzer" ]
+      difficulty: "advanced"
+      sub_skills:
+      - reverse_engineering
+      - behavior_analysis
+      - sandbox_integration
+      - yara_rule_creation
+
+    network_analysis:
+      level: 3
+      description: "Analyze network traffic and communication patterns"
+      agents: [ "tier2-network-investigator" ]
+      difficulty: "advanced"
+      sub_skills:
+      - dns_analysis
+      - flow_analysis
+      - c2_detection
+      - lateral_movement_detection
+
+    identity_risk_assessment:
+      level: 3
+      description: "Assess identity-related risks and anomalies"
+      agents: [ "tier2-identity-analyzer" ]
+      difficulty: "advanced"
+      sub_skills:
+      - authentication_analysis
+      - privilege_escalation_detection
+      - user_profiling
+      - account_compromise_detection
+
+    risk_assessment:
+      level: 3
+      description: "Assess overall risk and business impact"
+      agents: [ "tier2-threat-assessor" ]
+      difficulty: "advanced"
+      sub_skills:
+      - impact_analysis
+      - severity_scoring
+      - escalation_decision_making
+
+  forensic_skills:
+    forensic_analysis:
+      level: 4
+      description: "Conduct deep forensic analysis of systems"
+      agents: [ "tier3-forensic-investigator" ]
+      difficulty: "expert"
+      sub_skills:
+      - memory_forensics
+      - disk_forensics
+      - artifact_analysis
+
+    windows_internals:
+      level: 4
+      description: "Deep knowledge of Windows internals and structures"
+      agents: [ "tier3-forensic-investigator" ]
+      difficulty: "expert"
+
+    timeline_analysis:
+      level: 4
+      description: "Reconstruct and analyze incident timelines"
+      agents: [ "tier3-incident-reconstructor" ]
+      difficulty: "expert"
+      sub_skills:
+      - event_correlation
+      - timestamp_normalization
+      - causality_analysis
+
+    evidence_preservation:
+      level: 4
+      description: "Preserve digital evidence with integrity"
+      agents: [ "tier3-evidence-collector" ]
+      difficulty: "expert"
+      sub_skills:
+      - chain_of_custody
+      - hash_verification
+      - legal_compliance
+
+    root_cause_analysis:
+      level: 4
+      description: "Determine root cause and contributing factors"
+      agents: [ "tier3-root-cause-analyzer" ]
+      difficulty: "expert"
+      sub_skills:
+      - vulnerability_assessment
+      - attack_technique_classification
+      - remediation_planning
+
+  cloud_skills:
+    cloud_security_assessment:
+      level: 3
+      description: "Assess cloud infrastructure security"
+      agents: [ "cloud-hunter-infrastructure-analyzer" ]
+      difficulty: "advanced"
+      sub_skills:
+      - iam_policy_analysis
+      - configuration_review
+      - compliance_checking
+
+    log_analysis:
+      level: 3
+      description: "Analyze cloud and application logs"
+      agents: [ "cloud-hunter-log-anomaly-detector" ]
+      difficulty: "advanced"
+      sub_skills:
+      - anomaly_detection
+      - behavioral_analysis
+      - api_pattern_analysis
+
+    threat_hunting:
+      level: 3
+      description: "Proactively hunt for threats"
+      agents: [ "cloud-hunter-proactive-hunter" ]
+      difficulty: "advanced"
+      sub_skills:
+      - hypothesis_generation
+      - query_optimization
+      - attack_technique_knowledge
+
+  technical_skills:
+    regex_mastery:
+      level: 2
+      description: "Advanced regular expression skills"
+      agents: [ "tier1-alert-parser" ]
+      difficulty: "intermediate"
+
+    machine_learning_inference:
+      level: 2
+      description: "Use ML models for analysis and detection"
+      agents: [ "tier1-fp-eliminator", "cloud-hunter-log-anomaly-detector" ]
+      difficulty: "intermediate"
+
+    query_optimization:
+      level: 3
+      description: "Optimize and write efficient KQL queries"
+      agents: [ "cloud-hunter-log-anomaly-detector", "cloud-hunter-proactive-hunter" ]
+      difficulty: "advanced"
+
+    graph_analysis:
+      level: 3
+      description: "Analyze relationships and graph data structures"
+      agents: [ "tier2-network-investigator" ]
+      difficulty: "advanced"
+
+    api_integration:
+      level: 2
+      description: "Integrate and use external APIs"
+      agents: [ "cloud-hunter-threat-intel-enricher" ]
+      difficulty: "intermediate"
+
+  soft_skills:
+    business_context_knowledge:
+      level: 2
+      description: "Understanding of organization and business context"
+      agents: [ "tier1-alert-router", "tier2-threat-assessor" ]
+      difficulty: "intermediate"
+
+    communication:
+      level: 2
+      description: "Clear communication of findings"
+      agents: [ "all" ]
+      difficulty: "intermediate"
+
+    documentation:
+      level: 2
+      description: "Comprehensive documentation"
+      agents: [ "all" ]
+      difficulty: "intermediate"
+
+    critical_thinking:
+      level: 3
+      description: "Analytical and critical thinking"
+      agents: [ "all" ]
+      difficulty: "advanced"
+
+skill_progression:
+  level_1:
+    title: "Analyst"
+    required_skills: 3
+    key_skills:
+    - alert_parsing
+    - data_normalization
+    - pattern_recognition
+
+  level_2:
+    title: "Senior Analyst"
+    required_skills: 6
+    key_skills:
+    - threat_intelligence_integration
+    - alert_classification
+    - query_optimization
+
+  level_3:
+    title: "Investigator"
+    required_skills: 10
+    key_skills:
+    - malware_analysis
+    - network_analysis
+    - identity_risk_assessment
+
+  level_4:
+    title: "Forensic Expert"
+    required_skills: 15
+    key_skills:
+    - forensic_analysis
+    - windows_internals
+    - root_cause_analysis
