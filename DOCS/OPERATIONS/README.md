@@ -13,23 +13,27 @@ This directory contains day-to-day operational guidance for security analysts, i
 - [Tier 1 Operations](TIER1_OPERATIONS.md) - Alert triage and routing procedures
 - [Escalation Checklist](ESCALATION_CHECKLIST.md) - When and how to escalate
 - [Quick Reference](../REFERENCE/QUICK_REFERENCE.md) - 2-minute answers
+- [Best Practices](BEST_PRACTICES.md) - Operational best practices
 
 ### For Tier 2 Investigators
 
 - [Investigation Workflow](INVESTIGATION_WORKFLOW.md) - Step-by-step procedures
 - [Tier Integration](TIER_INTEGRATION.md) - Escalating to Tier 3
 - [Data Sources Guide](DATA_SOURCES.md) - Available evidence
+- [Best Practices](BEST_PRACTICES.md) - Operational best practices
 
 ### For Tier 3 Forensic Analysts
 
 - [Forensic Procedures](FORENSIC_PROCEDURES.md) - Evidence collection standards
 - [Case Management](CASE_MANAGEMENT.md) - Case documentation
 - [Chain of Custody](CHAIN_OF_CUSTODY.md) - Legal requirements
+- [Best Practices](BEST_PRACTICES.md) - Operational best practices
 
 ## Files in This Directory
 
 | File                        | Purpose                        | Audience             |
 | --------------------------- | ------------------------------ | -------------------- |
+| `BEST_PRACTICES.md`         | Best practices guide           | All tiers            |
 | `TIER_INTEGRATION.md`       | Automatic escalation framework | All tiers            |
 | `TIER1_OPERATIONS.md`       | Alert handling procedures      | Tier 1 analysts      |
 | `INVESTIGATION_WORKFLOW.md` | Investigation procedures       | Tier 2 investigators |

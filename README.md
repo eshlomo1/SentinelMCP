@@ -32,143 +32,235 @@ Tier 3: FORENSIC        → Root cause analysis, evidence collection
 Cloud Hunter (Parallel) → Proactive threat hunting across infrastructure
 ```
 
-### Key Features
+### Key Stats
 
-- **4-Tier Operational Hierarchy**
-  - **Tier 1 (Triage)**: Alert normalization, enrichment, and false positive elimination
-  - **Tier 2 (Investigation)**: In-depth malware, network, and identity analysis
-  - **Tier 3 (Forensic)**: Root cause analysis and legal evidence handling
-  - **Cloud Hunter**: Proactive threat hunting across cloud infrastructure
-
-- **16 Specialized Agents** with defined roles, capabilities, and SLAs
-- **40+ Skill Framework** with 4-level progression (Analyst → Senior Analyst → Investigator → Expert)
-- **5 Operational Workflows** including alert-to-resolution flow
-- **4 Escalation Matrices** with decision trees and notification templates
-- **8 Integrated Data Sources** (Defender XDR, Entra ID, Azure, AWS, GCP, threat intelligence)
+- **16 Agents** with defined roles and responsibilities
+- **16 Roles** with specific authorities and escalation paths
+- **40+ Skills** organized in 4-level progression (Analyst → Senior Analyst → Investigator → Expert)
+- **5 Workflows** for alert handling, investigation, and escalation
+- **8 Data Sources** integrated (Defender XDR, Entra ID, Azure, AWS, GCP, etc.)
 - **4 JSON Schemas** for data validation and standardization
+- **Tier Integration** with automatic and manual escalation criteria
+
+### What Problems Does It Solve?
+
+✅ **Alert Fatigue** - Automatic false positive elimination  
+✅ **Investigation Confusion** - Clear escalation paths and decision criteria  
+✅ **Poor SLAs** - Automatic escalation when deadlines approach  
+✅ **Evidence Loss** - Structured forensic case management  
+✅ **Knowledge Gaps** - Skills progression and role definitions  
+✅ **Inconsistent Process** - Standardized workflows at each tier
+
+---
+
+## Setup
+
+### Prerequisites
+
+- Microsoft Sentinel workspace (production or dev/test)
+- Access to data sources (Defender XDR, Entra ID, Azure)
+- Git (for version control)
+- Python 3.8+ or PowerShell 7+ (for implementation)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/eshlomo1/SentinelMCP.git
+cd SentinelMCP
+
+# Review configuration
+cat config.yaml
+
+# Check your workspace ID
+grep "workspace_id" config.yaml
+```
+
+### Configuration
+
+1. **Update workspace details** in `config.yaml`:
+
+   ```yaml
+   workspace_id: <your-workspace-id>
+   tenant_id: <your-tenant-id>
+   organization: <your-organization>
+   ```
+
+2. **Review SLAs** (`config.yaml`):
+
+   ```yaml
+   slas:
+     critical: 5 minutes # Tier 1 response time
+     high: 15 minutes
+     medium: 1 hour
+     low: 4 hours
+   ```
+
+3. **Customize agents** in `agents/`:
+   - Modify SLAs based on your capacity
+   - Add data sources specific to your environment
+   - Adjust escalation criteria
+
+---
+
+## Key Concepts
+
+### Tier Architecture
+
+Each tier has **specific responsibilities** and **clear escalation criteria**:
+
+| Tier             | Focus         | SLA       | Agents   | Output                                   |
+| ---------------- | ------------- | --------- | -------- | ---------------------------------------- |
+| **Tier 1**       | Triage        | 5-15 min  | 4 agents | Normalized alert, FP decision            |
+| **Tier 2**       | Investigation | 30-60 min | 4 agents | Incident assessment, escalation decision |
+| **Tier 3**       | Forensic      | 8 hours   | 4 agents | Root cause, evidence package             |
+| **Cloud Hunter** | Proactive     | 4 hours   | 4 agents | Threat intel, anomalies                  |
+
+### Escalation Framework
+
+**Automatic escalation** happens when specific conditions are met:
+
+- **Tier 1→2**: CRITICAL severity, confirmed compromise, lateral movement, data exfil attempts
+- **Tier 2→3**: Multi-system compromise, APT indicators, legal/forensic requirements
+- **Tier 3→Closure**: Root cause documented, evidence collected, case complete
+
+See [DOCS/OPERATIONS/TIER_INTEGRATION.md](DOCS/OPERATIONS/TIER_INTEGRATION.md) for detailed escalation criteria.
+
+### Roles & Responsibilities
+
+Each agent has a corresponding **Role** that defines:
+
+- Decision-making authority
+- Escalation rights
+- Required skills
+- Success metrics
+
+See [roles/roles-matrix.yaml](roles/roles-matrix.yaml) for complete role definitions.
+
+---
+
+## Documentation Guide
+
+📚 **[START WITH DOCS/ →](DOCS/)**
+
+SentinelMCP includes comprehensive documentation organized by role and use case:
+
+- **For Operations Teams**: [DOCS/OPERATIONS/](DOCS/OPERATIONS/) - Procedures for Tiers 1, 2, and 3
+- **For Architects**: [DOCS/ARCHITECTURE/](DOCS/ARCHITECTURE/) - System design and capacity planning
+- **For Developers**: [DOCS/DEVELOPMENT/](DOCS/DEVELOPMENT/) - Building agents and integrating systems
+- **For Everyone**: [DOCS/REFERENCE/](DOCS/REFERENCE/) - Quick reference and FAQs
+- **For Troubleshooting**: [DOCS/SUPPORT/](DOCS/SUPPORT/) - Help and issue resolution
+
+### 🚀 Quick Start
+
+| Role                    | Start Here                                                                               | Time   |
+| ----------------------- | ---------------------------------------------------------------------------------------- | ------ |
+| **Tier 1 Analyst**      | [DOCS/OPERATIONS/TIER1_OPERATIONS.md](DOCS/OPERATIONS/TIER1_OPERATIONS.md)               | 10 min |
+| **Tier 2 Investigator** | [DOCS/OPERATIONS/INVESTIGATION_WORKFLOW.md](DOCS/OPERATIONS/INVESTIGATION_WORKFLOW.md)   | 10 min |
+| **Tier 3 Forensic**     | [DOCS/OPERATIONS/FORENSIC_PROCEDURES.md](DOCS/OPERATIONS/FORENSIC_PROCEDURES.md)         | 10 min |
+| **Quick Answer**        | [DOCS/REFERENCE/QUICK_REFERENCE.md](DOCS/REFERENCE/QUICK_REFERENCE.md)                   | 2 min  |
+| **Architect**           | [DOCS/ARCHITECTURE/ARCHITECTURE_OVERVIEW.md](DOCS/ARCHITECTURE/ARCHITECTURE_OVERVIEW.md) | 15 min |
+| **Developer**           | [DOCS/DEVELOPMENT/README.md](DOCS/DEVELOPMENT/README.md)                                 | 10 min |
+
+**Need help?** → [DOCS/README.md](DOCS/README.md) for complete documentation map
+
+---
+
+## Repository Structure
 
 ## Repository Structure
 
 ```
 SentinelMCP/
-├── README.md                          # This file - Project overview
-├── TIER_INTEGRATION.md                # Tier-to-tier escalation framework
-├── HIERARCHY_README.md                # Hierarchy overview and organization
-├── INDEX.md                           # Navigation index and quick links
-├── HIERARCHY_SUMMARY.md               # Complete component summary
-├── ARCHITECTURE_DIAGRAM.md            # Visual architecture diagrams
-├── QUICK_REFERENCE.md                 # Quick reference and checklists
-├── CHANGELOG.md                       # Version history
-├── CONTRIBUTING.md                    # Contributor guidelines
-├── LICENSE                            # MIT License
-├── .gitignore                         # Git ignore rules
-│
-├── config.yaml                        # Main workspace configuration
-│
-├── agents/                            # Agent definitions (16 agents, 4 tiers)
-│   ├── tier1-agents.yaml              # Triage agents (Alert normalization, enrichment, routing)
-│   ├── tier2-agents.yaml              # Investigation agents (Malware, network, identity, threat assessment)
-│   ├── tier3-forensic-agents.yaml     # Forensic agents (Investigation, reconstruction, evidence, root cause)
-│   └── cloud-hunter-agents.yaml       # Cloud hunting agents (Infrastructure, logs, threat intel, proactive)
-│
-├── roles/                             # Role definitions (16 roles, 1:1 with agents)
-│   └── roles-matrix.yaml              # Complete role matrix with responsibilities and authority
-│
-├── skills/                            # Skills framework
-│   └── skills-matrix.yaml             # 40+ skills organized by level and category
-│
-├── schema/                            # Data validation schemas (JSON)
-│   ├── agent-schema.json              # Agent configuration validation
-│   ├── alert-schema.json              # Alert data validation
-│   ├── investigation-schema.json      # Investigation tracking validation
-│   └── case-schema.json               # Forensic case validation
-│
-└── data/                              # Data and configuration
-    ├── config.yaml                    # Workspace settings, SLAs, escalation triggers
-    ├── tier-integration.yaml          # Tier-to-tier escalation criteria and processes
-    ├── data-sources.yaml              # 8 integrated data sources and patterns
-    ├── workflows.yaml                 # 5 operational workflows with steps
-    └── escalation-paths.yaml          # 4 escalation matrices with templates
+├── README.md                      ← Main entry point (this file)
+├── DOCS/                          ← Comprehensive documentation
+│   ├── README.md                  ← Documentation navigation
+│   ├── OPERATIONS/                ← Day-to-day operations procedures
+│   │   ├── TIER_INTEGRATION.md    ← Escalation framework
+│   │   ├── TIER1_OPERATIONS.md
+│   │   ├── INVESTIGATION_WORKFLOW.md
+│   │   ├── FORENSIC_PROCEDURES.md
+│   │   ├── DATA_SOURCES.md
+│   │   ├── CASE_MANAGEMENT.md
+│   │   └── ESCALATION_CHECKLIST.md
+│   ├── ARCHITECTURE/              ← System design
+│   │   ├── ARCHITECTURE_OVERVIEW.md
+│   │   ├── HIERARCHY.md
+│   │   ├── DATA_FLOW.md
+│   │   └── CAPACITY_PLANNING.md
+│   ├── DEVELOPMENT/               ← Implementation guides
+│   │   ├── AGENT_DEVELOPMENT.md
+│   │   ├── INTEGRATION_GUIDE.md
+│   │   ├── WORKFLOW_CUSTOM.md
+│   │   └── SCHEMA_GUIDE.md
+│   ├── REFERENCE/                 ← Quick lookups
+│   │   ├── QUICK_REFERENCE.md
+│   │   ├── ESCALATION_CRITERIA.md
+│   │   ├── GLOSSARY.md
+│   │   └── FAQ.md
+│   └── SUPPORT/                   ← Help & troubleshooting
+│       ├── TROUBLESHOOTING.md
+│       ├── KNOWN_ISSUES.md
+│       ├── PERFORMANCE_TUNING.md
+│       └── VERSION_COMPATIBILITY.md
+├── agents/                        ← 16 Agent definitions
+│   ├── tier1-agents.yaml
+│   ├── tier2-agents.yaml
+│   ├── tier3-forensic-agents.yaml
+│   └── cloud-hunter-agents.yaml
+├── roles/                         ← 16 Role definitions
+│   └── roles-matrix.yaml
+├── skills/                        ← 40+ Skills framework
+│   └── skills-matrix.yaml
+├── schema/                        ← JSON validation schemas
+│   ├── agent-schema.json
+│   ├── alert-schema.json
+│   ├── investigation-schema.json
+│   └── case-schema.json
+├── data/                          ← Configuration data
+│   ├── config.yaml                ← Workspace configuration
+│   ├── tier-integration.yaml      ← Escalation framework (technical)
+│   ├── data-sources.yaml          ← Integrated data sources
+│   ├── workflows.yaml             ← Operational workflows
+│   └── escalation-paths.yaml      ← Escalation matrices
+├── CHANGELOG.md                   ← Version history
+├── CONTRIBUTING.md                ← Contributing guidelines
+├── LICENSE                        ← MIT License
+└── .gitignore
 ```
 
 ## Quick Start
 
-### 1. Understanding the Hierarchy
+### 1. Clone & Configure
 
-Start with these files in order:
-
-```
-→ HIERARCHY_README.md              (Overview, 5 min)
-→ INDEX.md                         (Navigation guide, 3 min)
-→ QUICK_REFERENCE.md               (Quick lookup, 2 min)
-→ ARCHITECTURE_DIAGRAM.md          (Visual guide, 5 min)
-→ HIERARCHY_SUMMARY.md             (Complete details, 15 min)
+```bash
+git clone https://github.com/eshlomo1/SentinelMCP.git
+cd SentinelMCP
+cp config.yaml config.yaml.backup
+# Edit config.yaml with your workspace details
 ```
 
-### 2. Key Components
+### 2. Read the Docs
 
-#### Agents (16 total)
+👉 **Start here**: [DOCS/README.md](DOCS/README.md)
 
-Each agent has:
+This comprehensive guide covers:
 
-- Unique ID and role_id linking to roles
-- Defined capabilities and data sources
-- 3-5 required skills from the skill matrix
-- SLA response times by severity
-- Success metrics for evaluation
+- Role-specific documentation
+- Task-based navigation
+- Quick reference materials
+- Troubleshooting guides
 
-Read: `agents/`
+### 3. Choose Your Role
 
-#### Roles (16 total)
-
-Each role has:
-
-- Primary agent responsibility
-- Key responsibilities and decision authority
-- Required skills and escalation authority
-- Mapped to one agent (1:1 correspondence)
-
-Read: `roles/roles-matrix.yaml`
-
-#### Skills (40+)
-
-Organized in 4 levels:
-
-- **Level 1**: Analyst (entry-level)
-- **Level 2**: Senior Analyst (intermediate)
-- **Level 3**: Investigator (advanced)
-- **Level 4**: Expert (specialized)
-
-Read: `skills/skills-matrix.yaml`
-
-#### Workflows (5 total)
-
-- Alert → Investigation → Resolution
-- Cloud hunting → Threat assessment
-- Escalation procedures
-- Evidence collection
-- Incident documentation
-
-Read: `data/workflows.yaml`
-
-### 3. Configuration
-
-#### Workspace Details
-
-- **Workspace ID**: 72e316b2-cc46-4d4b-93e1-3561ebae0b82
-- **Tenant ID**: dbf22f42-e951-4d07-8579-1400a6f9a473
-- **Subscription ID**: 4167334c-383c-4f4a-98fa-f4f591d709b3
-- **Organization**: PurpleX Lab
-- **Environment**: Production
-
-#### SLAs by Severity
-
-- **Critical**: 30 seconds (Tier 1) → 5 minutes (Tier 2)
-- **High**: 2 minutes (Tier 1) → 15 minutes (Tier 2)
-- **Medium**: 5 minutes (Tier 1) → 30 minutes (Tier 2)
-- **Low**: 15 minutes (Tier 1) → 4 hours (Tier 2)
-
-Read: `data/config.yaml` or `config.yaml`
+| Role                        | Start Here                                                                               |
+| --------------------------- | ---------------------------------------------------------------------------------------- |
+| **Tier 1 Alert Analyst**    | [DOCS/OPERATIONS/TIER1_OPERATIONS.md](DOCS/OPERATIONS/TIER1_OPERATIONS.md)               |
+| **Tier 2 Investigator**     | [DOCS/OPERATIONS/INVESTIGATION_WORKFLOW.md](DOCS/OPERATIONS/INVESTIGATION_WORKFLOW.md)   |
+| **Tier 3 Forensic Analyst** | [DOCS/OPERATIONS/FORENSIC_PROCEDURES.md](DOCS/OPERATIONS/FORENSIC_PROCEDURES.md)         |
+| **Architect/Manager**       | [DOCS/ARCHITECTURE/ARCHITECTURE_OVERVIEW.md](DOCS/ARCHITECTURE/ARCHITECTURE_OVERVIEW.md) |
+| **Developer/Engineer**      | [DOCS/DEVELOPMENT/README.md](DOCS/DEVELOPMENT/README.md)                                 |
+| **Need Quick Answer?**      | [DOCS/REFERENCE/QUICK_REFERENCE.md](DOCS/REFERENCE/QUICK_REFERENCE.md)                   |
 
 ## Architecture Overview
 
@@ -296,22 +388,6 @@ The YAML definitions can be implemented as:
 - **Kusto Query Language (KQL)** - For detection rules
 - **Playbook Templates** - For incident response
 
-## File Statistics
-
-```
-Total Files:       17
-Total Directories: 6
-Total Lines:       4,029
-Documentation:     2,000+ lines
-Agents:            16 (4 files)
-Roles:             16 (1 file)
-Skills:            40+ (1 file)
-Schemas:           4 JSON files
-Workflows:         5 (1 file)
-Escalation Paths:  4 matrices (1 file)
-Data Sources:      8 (1 file)
-```
-
 ## Agent Summary
 
 ### Tier 1: Triage (SLA: 5 min)
@@ -353,53 +429,11 @@ Data Sources:      8 (1 file)
 | [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) | Visual architecture and flows                           | 5 min     |
 | [HIERARCHY_README.md](HIERARCHY_README.md)         | Hierarchy-specific documentation                        | 5 min     |
 
-## Best Practices
-
-### Alert Handling
-
-- Route alerts to appropriate tier based on severity
-- Enrich with context before escalation
-- Track investigation progress and timeline
-- Document decisions and findings
-
-### Investigation
-
-- Use consistent data collection methods
-- Maintain chain of custody for evidence
-- Document all findings and conclusions
-- Escalate when scope grows beyond tier capability
-
-### Forensic Analysis
-
-- Collect all relevant evidence
-- Preserve integrity of evidence
-- Follow legal requirements
-- Provide detailed root cause analysis
-
-### Cloud Hunting
-
-- Run continuous anomaly detection
-- Correlate findings across accounts
-- Enrich with threat intelligence
-- Feed findings to investigation tier
-
 ## Support & Contribution
 
-### Using This Framework
+For detailed contribution guidelines and framework usage, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-1. Read the [HIERARCHY_README.md](HIERARCHY_README.md) for overview
-2. Review agent capabilities in `agents/`
-3. Check role responsibilities in `roles/roles-matrix.yaml`
-4. Customize workflows in `data/workflows.yaml`
-5. Implement agents for your environment
-
-### Customization
-
-- Adjust agent capabilities for your use case
-- Modify SLAs based on organizational requirements
-- Add new data sources in `data-sources.yaml`
-- Create additional workflows as needed
-- Extend skills matrix for your team
+For best practices by operational area, see [DOCS/OPERATIONS/BEST_PRACTICES.md](DOCS/OPERATIONS/BEST_PRACTICES.md).
 
 ## License
 
