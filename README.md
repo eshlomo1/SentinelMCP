@@ -26,41 +26,41 @@ A comprehensive, production-ready Managed Detection and Response (MDR) framework
 ```
 SentinelMCP/
 ├── README.md                          # This file - Project overview
-├── LICENSE                            # Project license
+├── HIERARCHY_README.md                # Hierarchy overview and organization
+├── INDEX.md                           # Navigation index and quick links
+├── HIERARCHY_SUMMARY.md               # Complete component summary
+├── ARCHITECTURE_DIAGRAM.md            # Visual architecture diagrams
+├── QUICK_REFERENCE.md                 # Quick reference and checklists
+├── CHANGELOG.md                       # Version history
+├── CONTRIBUTING.md                    # Contributor guidelines
+├── LICENSE                            # MIT License
 ├── .gitignore                         # Git ignore rules
 │
-└── hierarchy/                         # Main MDR hierarchy directory
-    ├── README.md                      # Hierarchy overview
-    ├── INDEX.md                       # Navigation index and quick links
-    ├── HIERARCHY_SUMMARY.md           # Complete component summary
-    ├── ARCHITECTURE_DIAGRAM.md        # Visual architecture diagrams
-    ├── QUICK_REFERENCE.md             # Quick reference and checklists
-    │
-    ├── agents/                        # Agent definitions (16 agents, 4 tiers)
-    │   ├── tier1-agents.yaml          # Triage agents (Alert normalization, enrichment, routing)
-    │   ├── tier2-agents.yaml          # Investigation agents (Malware, network, identity, threat assessment)
-    │   ├── tier3-forensic-agents.yaml # Forensic agents (Investigation, reconstruction, evidence, root cause)
-    │   └── cloud-hunter-agents.yaml   # Cloud hunting agents (Infrastructure, logs, threat intel, proactive)
-    │
-    ├── roles/                         # Role definitions (16 roles, 1:1 with agents)
-    │   └── roles-matrix.yaml          # Complete role matrix with responsibilities and authority
-    │
-    ├── skills/                        # Skills framework
-    │   └── skills-matrix.yaml         # 40+ skills organized by level and category
-    │
-    ├── schema/                        # Data validation schemas (JSON)
-    │   ├── agent-schema.json          # Agent configuration validation
-    │   ├── alert-schema.json          # Alert data validation
-    │   ├── investigation-schema.json  # Investigation tracking validation
-    │   └── case-schema.json           # Forensic case validation
-    │
-    ├── data/                          # Data and configuration
-    │   ├── config.yaml                # Workspace settings, SLAs, escalation triggers
-    │   ├── data-sources.yaml          # 8 integrated data sources and patterns
-    │   ├── workflows.yaml             # 5 operational workflows with steps
-    │   └── escalation-paths.yaml      # 4 escalation matrices with templates
-    │
-    └── config.yaml                    # Root configuration (duplicate for access)
+├── config.yaml                        # Main workspace configuration
+│
+├── agents/                            # Agent definitions (16 agents, 4 tiers)
+│   ├── tier1-agents.yaml              # Triage agents (Alert normalization, enrichment, routing)
+│   ├── tier2-agents.yaml              # Investigation agents (Malware, network, identity, threat assessment)
+│   ├── tier3-forensic-agents.yaml     # Forensic agents (Investigation, reconstruction, evidence, root cause)
+│   └── cloud-hunter-agents.yaml       # Cloud hunting agents (Infrastructure, logs, threat intel, proactive)
+│
+├── roles/                             # Role definitions (16 roles, 1:1 with agents)
+│   └── roles-matrix.yaml              # Complete role matrix with responsibilities and authority
+│
+├── skills/                            # Skills framework
+│   └── skills-matrix.yaml             # 40+ skills organized by level and category
+│
+├── schema/                            # Data validation schemas (JSON)
+│   ├── agent-schema.json              # Agent configuration validation
+│   ├── alert-schema.json              # Alert data validation
+│   ├── investigation-schema.json      # Investigation tracking validation
+│   └── case-schema.json               # Forensic case validation
+│
+└── data/                              # Data and configuration
+    ├── config.yaml                    # Workspace settings, SLAs, escalation triggers
+    ├── data-sources.yaml              # 8 integrated data sources and patterns
+    ├── workflows.yaml                 # 5 operational workflows with steps
+    └── escalation-paths.yaml          # 4 escalation matrices with templates
 ```
 
 ## Quick Start
@@ -70,11 +70,11 @@ SentinelMCP/
 Start with these files in order:
 
 ```
-→ hierarchy/README.md              (Overview, 5 min)
-→ hierarchy/INDEX.md               (Navigation guide, 3 min)
-→ hierarchy/QUICK_REFERENCE.md     (Quick lookup, 2 min)
-→ hierarchy/ARCHITECTURE_DIAGRAM.md (Visual guide, 5 min)
-→ hierarchy/HIERARCHY_SUMMARY.md   (Complete details, 15 min)
+→ HIERARCHY_README.md              (Overview, 5 min)
+→ INDEX.md                         (Navigation guide, 3 min)
+→ QUICK_REFERENCE.md               (Quick lookup, 2 min)
+→ ARCHITECTURE_DIAGRAM.md          (Visual guide, 5 min)
+→ HIERARCHY_SUMMARY.md             (Complete details, 15 min)
 ```
 
 ### 2. Key Components
@@ -89,7 +89,7 @@ Each agent has:
 - SLA response times by severity
 - Success metrics for evaluation
 
-Read: `hierarchy/agents/`
+Read: `agents/`
 
 #### Roles (16 total)
 
@@ -100,7 +100,7 @@ Each role has:
 - Required skills and escalation authority
 - Mapped to one agent (1:1 correspondence)
 
-Read: `hierarchy/roles/roles-matrix.yaml`
+Read: `roles/roles-matrix.yaml`
 
 #### Skills (40+)
 
@@ -111,7 +111,7 @@ Organized in 4 levels:
 - **Level 3**: Investigator (advanced)
 - **Level 4**: Expert (specialized)
 
-Read: `hierarchy/skills/skills-matrix.yaml`
+Read: `skills/skills-matrix.yaml`
 
 #### Workflows (5 total)
 
@@ -121,7 +121,7 @@ Read: `hierarchy/skills/skills-matrix.yaml`
 - Evidence collection
 - Incident documentation
 
-Read: `hierarchy/data/workflows.yaml`
+Read: `data/workflows.yaml`
 
 ### 3. Configuration
 
@@ -140,7 +140,7 @@ Read: `hierarchy/data/workflows.yaml`
 - **Medium**: 5 minutes (Tier 1) → 30 minutes (Tier 2)
 - **Low**: 15 minutes (Tier 1) → 4 hours (Tier 2)
 
-Read: `hierarchy/data/config.yaml`
+Read: `data/config.yaml` or `config.yaml`
 
 ## Architecture Overview
 
@@ -240,23 +240,23 @@ git clone https://github.com/eshlomo1/SentinelMCP.git
 cd SentinelMCP
 
 # Review the hierarchy
-cat hierarchy/README.md
+cat HIERARCHY_README.md
 
 # Start with quick reference
-cat hierarchy/QUICK_REFERENCE.md
+cat QUICK_REFERENCE.md
 
 # Explore agents, roles, and skills
-cat hierarchy/agents/tier1-agents.yaml
-cat hierarchy/roles/roles-matrix.yaml
-cat hierarchy/skills/skills-matrix.yaml
+cat agents/tier1-agents.yaml
+cat roles/roles-matrix.yaml
+cat skills/skills-matrix.yaml
 ```
 
 ### Configuration
 
-1. Update `hierarchy/data/config.yaml` with your workspace details
-2. Configure data sources in `hierarchy/data/data-sources.yaml`
+1. Update `data/config.yaml` with your workspace details
+2. Configure data sources in `data/data-sources.yaml`
 3. Adjust SLAs based on your organization's requirements
-4. Customize workflows in `hierarchy/data/workflows.yaml`
+4. Customize workflows in `data/workflows.yaml`
 
 ### Implementation
 
@@ -316,13 +316,13 @@ Data Sources:      8 (1 file)
 
 ## Documentation Files
 
-| Document                                                     | Purpose                             | Read Time |
-| ------------------------------------------------------------ | ----------------------------------- | --------- |
-| [HIERARCHY_SUMMARY.md](hierarchy/HIERARCHY_SUMMARY.md)       | Complete overview of all components | 15 min    |
-| [INDEX.md](hierarchy/INDEX.md)                               | Navigation guide and quick links    | 5 min     |
-| [QUICK_REFERENCE.md](hierarchy/QUICK_REFERENCE.md)           | Quick lookup and checklists         | 3 min     |
-| [ARCHITECTURE_DIAGRAM.md](hierarchy/ARCHITECTURE_DIAGRAM.md) | Visual architecture and flows       | 5 min     |
-| [README.md](hierarchy/README.md)                             | Hierarchy-specific documentation    | 5 min     |
+| Document | Purpose | Read Time |
+| -------- | ------- | --------- |
+| [HIERARCHY_SUMMARY.md](HIERARCHY_SUMMARY.md) | Complete overview of all components | 15 min |
+| [INDEX.md](INDEX.md) | Navigation guide and quick links | 5 min |
+| [QUICK_REFERENCE.md](QUICK_REFERENCE.md) | Quick lookup and checklists | 3 min |
+| [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) | Visual architecture and flows | 5 min |
+| [HIERARCHY_README.md](HIERARCHY_README.md) | Hierarchy-specific documentation | 5 min |
 
 ## Best Practices
 
@@ -358,10 +358,10 @@ Data Sources:      8 (1 file)
 
 ### Using This Framework
 
-1. Read the [hierarchy/README.md](hierarchy/README.md) for overview
-2. Review agent capabilities in `hierarchy/agents/`
-3. Check role responsibilities in `hierarchy/roles/roles-matrix.yaml`
-4. Customize workflows in `hierarchy/data/workflows.yaml`
+1. Read the [HIERARCHY_README.md](HIERARCHY_README.md) for overview
+2. Review agent capabilities in `agents/`
+3. Check role responsibilities in `roles/roles-matrix.yaml`
+4. Customize workflows in `data/workflows.yaml`
 5. Implement agents for your environment
 
 ### Customization
@@ -392,10 +392,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 For questions or issues:
 
-1. Review the [hierarchy/INDEX.md](hierarchy/INDEX.md) for navigation
-2. Check [hierarchy/QUICK_REFERENCE.md](hierarchy/QUICK_REFERENCE.md) for quick answers
-3. Consult the specific agent files in `hierarchy/agents/`
-4. Review workflow definitions in `hierarchy/data/workflows.yaml`
+1. Review the [INDEX.md](INDEX.md) for navigation
+2. Check [QUICK_REFERENCE.md](QUICK_REFERENCE.md) for quick answers
+3. Consult the specific agent files in `agents/`
+4. Review workflow definitions in `data/workflows.yaml`
 
 ---
 

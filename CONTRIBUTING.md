@@ -33,9 +33,10 @@ hierarchy/
 Before making changes, review:
 
 - [README.md](README.md) - Project overview
-- [hierarchy/README.md](hierarchy/README.md) - Hierarchy overview
-- [hierarchy/HIERARCHY_SUMMARY.md](hierarchy/HIERARCHY_SUMMARY.md) - Complete documentation
-- [hierarchy/ARCHITECTURE_DIAGRAM.md](hierarchy/ARCHITECTURE_DIAGRAM.md) - Architecture
+- [HIERARCHY_README.md](HIERARCHY_README.md) - Hierarchy overview
+- [HIERARCHY_SUMMARY.md](HIERARCHY_SUMMARY.md) - Complete documentation
+- [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) - Architecture
+- [INDEX.md](INDEX.md) - Navigation index
 
 ## Types of Contributions
 
@@ -97,24 +98,24 @@ git checkout -b fix/bug-description
 
 #### For Agent Definitions
 
-- Follow the structure in `hierarchy/agents/*.yaml`
+- Follow the structure in `agents/*.yaml`
 - Include: id, role_id, name, role, description, capabilities, data_sources, skills, sla_response_time, success_metrics
-- Ensure role_id matches an existing role in `hierarchy/roles/roles-matrix.yaml`
-- Add skills that exist in `hierarchy/skills/skills-matrix.yaml`
+- Ensure role_id matches an existing role in `roles/roles-matrix.yaml`
+- Add skills that exist in `skills/skills-matrix.yaml`
 
 #### For Role Definitions
 
-- Follow the structure in `hierarchy/roles/roles-matrix.yaml`
+- Follow the structure in `roles/roles-matrix.yaml`
 - Include: role_id, role_name, primary_agent, responsibilities, required_skills, decision_authority, escalation_authority
 
 #### For Skill Definitions
 
-- Follow the structure in `hierarchy/skills/skills-matrix.yaml`
+- Follow the structure in `skills/skills-matrix.yaml`
 - Include: skill_id, skill_name, level, category, description, agents_using, difficulty, sub_skills
 
 #### For Workflows
 
-- Add to `hierarchy/data/workflows.yaml`
+- Add to `data/workflows.yaml`
 - Include: workflow_id, name, description, steps (with inputs, actions, outputs), sla, escalation_criteria
 
 #### For Documentation
@@ -131,16 +132,16 @@ Before committing:
 
 ```bash
 # Validate YAML syntax
-yamllint hierarchy/
+yamllint .
 
 # Validate JSON schemas
-jsonschema -i hierarchy/schema/agent-schema.json hierarchy/agents/*.yaml
+jsonschema -i schema/agent-schema.json agents/*.yaml
 
 # Check file counts and structure
-find hierarchy -type f | sort
+find . -maxdepth 1 -type d | sort
 
 # Verify total lines
-wc -l hierarchy/**/*.{yaml,json,md}
+wc -l {agents,roles,skills,schema,data}/*.{yaml,json}
 ```
 
 ### 5. Commit Changes
@@ -205,7 +206,7 @@ Before submitting a pull request, ensure:
 - [ ] Documentation has no emoji characters
 - [ ] File structure follows existing patterns
 - [ ] Changes don't break existing components
-- [ ] All files are in the `hierarchy/` or `SentinelMCP/` root directory
+- [ ] All files are in the appropriate root-level directories
 
 ## Naming Conventions
 
@@ -242,8 +243,8 @@ Before submitting a pull request, ensure:
 
 If you have questions:
 
-1. Review existing documentation in `hierarchy/`
-2. Check the [INDEX.md](hierarchy/INDEX.md) for relevant sections
+1. Review existing documentation: [HIERARCHY_README.md](HIERARCHY_README.md), [INDEX.md](INDEX.md)
+2. Check [INDEX.md](INDEX.md) for relevant sections
 3. Create a GitHub issue with your question
 4. Tag with appropriate labels
 
@@ -251,29 +252,29 @@ If you have questions:
 
 - Releases follow semantic versioning (major.minor.patch)
 - Releases are tagged in git with version number
-- Release notes document changes and improvements
-- Updates to version are made in README and CONTRIBUTING files
+- Release notes document changes and improvements in CHANGELOG.md
+- Updates to version are made in README, CHANGELOG, and CONTRIBUTING files
 
 ## Examples
 
 ### Adding a New Agent
 
-1. Open `hierarchy/agents/tier2-agents.yaml`
+1. Open `agents/tier2-agents.yaml` (or appropriate tier)
 2. Add new agent entry with all required fields
-3. Ensure role_id points to valid role in `hierarchy/roles/roles-matrix.yaml`
-4. Verify all skills exist in `hierarchy/skills/skills-matrix.yaml`
+3. Ensure role_id points to valid role in `roles/roles-matrix.yaml`
+4. Verify all skills exist in `skills/skills-matrix.yaml`
 5. Commit with message: `feat: add tier2-<agent-name>`
 
 ### Adding a New Skill
 
-1. Open `hierarchy/skills/skills-matrix.yaml`
+1. Open `skills/skills-matrix.yaml`
 2. Add skill entry with level, category, description
 3. Ensure referenced agents exist
 4. Commit with message: `feat: add skill-<category>-<name>`
 
 ### Updating Workflows
 
-1. Open `hierarchy/data/workflows.yaml`
+1. Open `data/workflows.yaml`
 2. Modify or add workflow steps
 3. Update SLA and escalation criteria
 4. Test that workflow matches agent capabilities

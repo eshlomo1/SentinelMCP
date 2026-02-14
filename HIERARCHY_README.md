@@ -14,24 +14,23 @@ The Sentinel MCP hierarchy organizes security operations across four operational
 ## Directory Structure
 
 ```
-hierarchy/
-├── README.md                    # This file
-├── config.yaml                  # Main hierarchy configuration
-├── agents/                      # Agent definitions
+SentinelMCP/
+├── config.yaml                    # Main configuration
+├── agents/                        # Agent definitions
 │   ├── tier1-agents.yaml
 │   ├── tier2-agents.yaml
 │   ├── tier3-forensic-agents.yaml
 │   └── cloud-hunter-agents.yaml
-├── roles/                       # Role definitions and responsibilities
+├── roles/                         # Role definitions and responsibilities
 │   └── roles-matrix.yaml
-├── skills/                      # Skills and capabilities
+├── skills/                        # Skills and capabilities
 │   └── skills-matrix.yaml
-├── schema/                      # Data schemas
+├── schema/                        # Data schemas
 │   ├── agent-schema.json
 │   ├── alert-schema.json
 │   ├── investigation-schema.json
 │   └── case-schema.json
-└── data/                        # Data flows and sources
+└── data/                          # Data flows and sources
     ├── data-sources.yaml
     ├── workflows.yaml
     └── escalation-paths.yaml

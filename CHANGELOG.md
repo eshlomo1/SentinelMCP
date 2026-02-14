@@ -5,6 +5,32 @@ All notable changes to the SentinelMCP project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-02-14 (Restructure Release)
+
+### Changed
+
+**Directory Structure**
+- Moved all folders and files from `hierarchy/` subdirectory to root level
+- Renamed `hierarchy/README.md` to `HIERARCHY_README.md` for clarity
+- Flattened project structure for easier navigation and access
+- All agents, roles, skills, schema, and data directories now at root level
+
+**Documentation Updates**
+- Updated all file path references throughout documentation
+- Updated README.md with new directory structure
+- Updated INDEX.md to reflect root-level organization
+- Updated HIERARCHY_README.md with new directory structure
+- Updated CONTRIBUTING.md with new file paths
+- Updated QUICK_REFERENCE.md with new structure
+- Updated HIERARCHY_SUMMARY.md with new file references
+- Updated ARCHITECTURE_DIAGRAM.md with new file references
+
+**Impact**
+- Improved project accessibility and simplified navigation
+- Easier for new contributors to understand file organization
+- All references updated for consistency
+- No changes to functionality or content
+
 ## [1.0.0] - 2026-02-14
 
 ### Added

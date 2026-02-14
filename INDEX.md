@@ -20,12 +20,12 @@ with 16 agents, 16 roles, 40+ skills, and 5 operational workflows.
 
 # DIRECTORY MAP
 
-hierarchy/
-├── 📄 README.md ← Start here!
-├── 📄 HIERARCHY_SUMMARY.md ← Complete overview
-├── 📄 ARCHITECTURE_DIAGRAM.md ← Visual diagrams
-├── 📄 QUICK_REFERENCE.md ← Quick reference
-├── 📄 INDEX.md ← This file
+SentinelMCP/
+├── HIERARCHY_README.md ← Start here!
+├── HIERARCHY_SUMMARY.md ← Complete overview
+├── ARCHITECTURE_DIAGRAM.md ← Visual diagrams
+├── QUICK_REFERENCE.md ← Quick reference
+├── INDEX.md ← This file
 │
 ├── config.yaml ← Main configuration
 │
